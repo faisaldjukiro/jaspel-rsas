@@ -1,71 +1,41 @@
-###################
-What is CodeIgniter
-###################
+# README - Aplikasi Perhitungan Jasa Medis Rumah Sakit AloeI Saboe
 
-CodeIgniter is an Application Development Framework - a toolkit - for people
-who build web sites using PHP. Its goal is to enable you to develop projects
-much faster than you could if you were writing code from scratch, by providing
-a rich set of libraries for commonly needed tasks, as well as a simple
-interface and logical structure to access these libraries. CodeIgniter lets
-you creatively focus on your project by minimizing the amount of code needed
-for a given task.
+## Deskripsi
+Aplikasi ini dibangun menggunakan CodeIgniter 3 dan template Mazer untuk membantu dalam perhitungan jasa medis di Rumah Sakit AloeI Saboe. Aplikasi ini dirancang untuk memudahkan pengelolaan data jasa medis, perhitungan distribusi jasa, serta pelaporan yang akurat dan efisien. Aplikasi ini digunakan untuk menghitung jasa medis bagi dokter, perawat, pegawai, maupun tenaga honorer di rumah sakit.
 
-*******************
-Release Information
-*******************
+## Fitur Utama
+- Manajemen data tenaga medis
+- Perhitungan jasa medis berdasarkan kategori
+- Pengelolaan tarif dan distribusi jasa
+- Laporan dan rekapitulasi data jasa medis
+- Pagination AJAX untuk menampilkan berita tanpa reload halaman
+- Tampilan responsif dengan template Mazer
 
-This repo contains in-development code for future releases. To download the
-latest stable release please visit the `CodeIgniter Downloads
-<https://codeigniter.com/download>`_ page.
+## Teknologi yang Digunakan
+- **Framework**: CodeIgniter 3
+- **Template UI**: Mazer
+- **Database**: MySQL
+- **AJAX & jQuery**: Untuk interaksi yang lebih dinamis
+- **Bootstrap**: Untuk tampilan yang responsif dan modern
 
-**************************
-Changelog and New Features
-**************************
+## Instalasi
+1. Clone repository ini ke dalam direktori server Anda:
+   ```sh
+   git clone https://github.com/faisaldjukiro/jaspel-rsas.git
+   ```
+2. Buat database di MySQL dan import file database yang disediakan.
+3. Konfigurasi database pada file `application/config/database.php`.
+4. Pastikan server web Anda (Apache/Nginx) telah dikonfigurasi dengan benar.
+5. Jalankan aplikasi di browser dengan URL sesuai konfigurasi server Anda.
 
-You can find a list of all changes for each release in the `user
-guide change log <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/changelog.rst>`_.
+## Kontribusi
+Jika Anda ingin berkontribusi dalam pengembangan aplikasi ini, silakan fork repository dan kirim pull request dengan perubahan yang diperlukan.
 
-*******************
-Server Requirements
-*******************
+## Lisensi
+Aplikasi ini dikembangkan untuk keperluan internal Rumah Sakit AloeI Saboe dan tidak untuk digunakan secara komersial tanpa izin.
 
-PHP version 5.6 or newer is recommended.
+## Kontak
+Jika ada pertanyaan atau masalah, silakan hubungi:
+- **Email**: support@rsaloeisaboe.com
+- **Website**: [www.rsaloeisaboe.com](http://www.rsaloeisaboe.com)
 
-It should work on 5.3.7 as well, but we strongly advise you NOT to run
-such old versions of PHP, because of potential security and performance
-issues, as well as missing features.
-
-************
-Installation
-************
-
-Please see the `installation section <https://codeigniter.com/userguide3/installation/index.html>`_
-of the CodeIgniter User Guide.
-
-*******
-License
-*******
-
-Please see the `license
-agreement <https://github.com/bcit-ci/CodeIgniter/blob/develop/user_guide_src/source/license.rst>`_.
-
-*********
-Resources
-*********
-
--  `User Guide <https://codeigniter.com/docs>`_
--  `Contributing Guide <https://github.com/bcit-ci/CodeIgniter/blob/develop/contributing.md>`_
--  `Language File Translations <https://github.com/bcit-ci/codeigniter3-translations>`_
--  `Community Forums <http://forum.codeigniter.com/>`_
--  `Community Wiki <https://github.com/bcit-ci/CodeIgniter/wiki>`_
--  `Community Slack Channel <https://codeigniterchat.slack.com>`_
-
-Report security issues to our `Security Panel <mailto:security@codeigniter.com>`_
-or via our `page on HackerOne <https://hackerone.com/codeigniter>`_, thank you.
-
-***************
-Acknowledgement
-***************
-
-The CodeIgniter team would like to thank EllisLab, all the
-contributors to the CodeIgniter project and you, the CodeIgniter user.
