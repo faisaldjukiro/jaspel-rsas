@@ -20,9 +20,7 @@ Aplikasi ini dibangun menggunakan CodeIgniter 3 dan template Mazer untuk membant
 
 ## Instalasi
 1. Clone repository ini ke dalam direktori server Anda:
-   ```sh
    git clone https://github.com/faisaldjukiro/jaspel-rsas.git
-   ```
 2. Buat database di MySQL dan import file database yang disediakan.
 3. Konfigurasi database pada file `application/config/database.php`.
 4. Pastikan server web Anda (Apache/Nginx) telah dikonfigurasi dengan benar.
