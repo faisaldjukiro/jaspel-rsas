@@ -34,6 +34,4 @@ Aplikasi ini dikembangkan untuk keperluan internal Rumah Sakit AloeI Saboe dan t
 
 ## Kontak
 Jika ada pertanyaan atau masalah, silakan hubungi:
-- **Email**: support@rsaloeisaboe.com
-- **Website**: [www.rsaloeisaboe.com](http://www.rsaloeisaboe.com)
-
+- **Email**: faisaldjukiro98@gmail.com
