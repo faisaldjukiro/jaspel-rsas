@@ -1,4 +1,4 @@
-# README - Aplikasi Perhitungan Jasa Medis Rumah Sakit AloeI Saboe
+ Aplikasi Perhitungan Jasa Medis Rumah Sakit AloeI Saboe
 
 ## Deskripsi
 Aplikasi ini dibangun menggunakan CodeIgniter 3 dan template Mazer untuk membantu dalam perhitungan jasa medis di Rumah Sakit AloeI Saboe. Aplikasi ini dirancang untuk memudahkan pengelolaan data jasa medis, perhitungan distribusi jasa, serta pelaporan yang akurat dan efisien. Aplikasi ini digunakan untuk menghitung jasa medis bagi dokter, perawat, pegawai, maupun tenaga honorer di rumah sakit.
