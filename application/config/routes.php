@@ -91,6 +91,11 @@ $route['rincian-dokter/(:any)/(:any)/(:any)'] = 'HistoryController/getRekapBydok
 $route['rincian-pasien-datail/(:any)/(:any)/(:any)'] = 'HistoryController/getRekapBynosep/$1/$2/$3';
 $route['jasa-non-dokter'] = 'HistoryNonDokterController';
 
+//pesan
+$route['informasi'] = 'PesanController';
+$route['chat/(:any)'] = 'PesanController/chating/$1';
+$route['kirimpesan'] = 'PesanController/kirimpesan';
+
 // $route['reset_password'] = 'LoginController/change_password';
 
 //

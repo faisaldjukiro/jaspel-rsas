@@ -224,8 +224,8 @@ class UpdateallController extends CI_Controller
                             WHERE kd_dpjp IS NULL OR kd_dpjp = '';");
         $response[] = ['step' => 19, 'message' => 'Dpjp2 Dst Berhasil Diperbarui'];
 
-        $this->db->query("INSERT INTO data_fix (nosep, kasus, rawat, nama, dokter, jumlah, kd_dpjp, id_kasus, point_dpjp, jumlah_point_dpjp,jumlah_operator,jumlah_sebelum_dikurangi)
-                            SELECT
+        $this->db->query("INSERT INTO data_fix (nosep, kasus, rawat, nama, dokter, jumlah, kd_dpjp, id_kasus, point_dpjp, jumlah_point_dpjp, jumlah_operator, jumlah_sebelum_dikurangi, kd_peg)
+                           SELECT
                                 b.nosep,
                                 a.kasus,
                                 a.ruangan AS rawat,
@@ -237,7 +237,8 @@ class UpdateallController extends CI_Controller
                                 NULL AS point_dpjp,
                                 NULL AS jumlah_point_dpjp,
                                 NULL AS jumlah_operator,
-                                jumlah_sebelum_dikurangi
+                                b.jumlah_sebelum_dikurangi,
+                                a.kd_peg 
                             FROM
                                 data_sim AS a
                                 INNER JOIN klaim AS b ON a.nosep = b.nosep
@@ -250,8 +251,15 @@ class UpdateallController extends CI_Controller
                                 b.jumlah,
                                 a.kd_dpjp,
                                 a.id_kasus,
-                                b.jumlah_sebelum_dikurangi");
-        $response[] = ['step' => 20, 'message' => 'Data Untuk Perhitungan Telah Dibuat'];
+                                b.jumlah_sebelum_dikurangi,
+                                a.kd_peg");
+
+        if ($this->db->affected_rows() > 0) {
+            $response[] = ['step' => 20, 'message' => 'Data Untuk Perhitungan Telah Dibuat'];
+            } else {
+            echo $this->db->error()['message']; 
+           }
+
         
         $this->db->query("UPDATE data_fix
                             SET point_dpjp = CASE 

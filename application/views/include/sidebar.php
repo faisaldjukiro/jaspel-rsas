@@ -93,6 +93,7 @@
                             <a href="<?php echo base_url('rekap-jasa-paramedis'); ?>" class="submenu-link">Rekap
                                 Jasa</a>
                         </li>
+
                     </ul>
                 </li>
 
@@ -100,6 +101,12 @@
                     <a href="<?php echo base_url('jasa-non-dokter'); ?>" class='sidebar-link'>
                         <i class="bi bi-ticket-detailed"></i>
                         <span>Jasa</span>
+                    </a>
+                </li>
+                <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'informasi') ? 'active' : ''; ?>">
+                    <a href="<?php echo base_url('informasi'); ?>" class='sidebar-link'>
+                        <i class="bi bi-messenger"></i>
+                        <span>Pesan</span>
                     </a>
                 </li>
                 <?php endif; ?>
