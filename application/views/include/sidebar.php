@@ -106,7 +106,7 @@
                 <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'informasi') ? 'active' : ''; ?>">
                     <a href="<?php echo base_url('informasi'); ?>" class='sidebar-link'>
                         <i class="bi bi-messenger"></i>
-                        <span>Pesan</span>
+                        <span>Casemix Chat</span>
                     </a>
                 </li>
                 <?php endif; ?>
@@ -130,6 +130,12 @@
                     <a href="<?php echo base_url('jasa-dokter'); ?>" class='sidebar-link'>
                         <i class="bi bi-ticket-detailed"></i>
                         <span>Jasa</span>
+                    </a>
+                </li>
+                <li class="sidebar-item <?php echo ($this->uri->segment(1) == 'informasi') ? 'active' : ''; ?>">
+                    <a href="<?php echo base_url('informasi'); ?>" class='sidebar-link'>
+                        <i class="bi bi-messenger"></i>
+                        <span>Casemix Chat</span>
                     </a>
                 </li>
                 <?php endif; ?>

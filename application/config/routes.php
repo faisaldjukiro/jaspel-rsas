@@ -93,6 +93,7 @@ $route['jasa-non-dokter'] = 'HistoryNonDokterController';
 
 //pesan
 $route['informasi'] = 'PesanController';
+$route['informasi-tambah'] = 'PesanController/tambahInformasi';
 $route['chat/(:any)'] = 'PesanController/chating/$1';
 $route['kirimpesan'] = 'PesanController/kirimpesan';
 

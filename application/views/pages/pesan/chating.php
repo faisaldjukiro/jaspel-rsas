@@ -15,7 +15,7 @@
 <body>
     <script src="<?= base_url('template/') ?>assets/static/js/initTheme.js"></script>
     <div id="app">
-        <?php $this->load->view('include/sidebar')?>?>
+        <?php $this->load->view('include/sidebar')?>
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -93,8 +93,9 @@
                                             <input type="hidden" name="id_informasi"
                                                 value="<?= $informasi['id_informasi']; ?>">
                                             <input type="text" class="form-control flex-grow-1 me-2" name="pesan"
-                                                placeholder="Ketik Pesan Disini" required>
-                                            <button type="submit" class="btn btn-primary">Kirim</button>
+                                                placeholder="Ketik Pesan Disini" autocomplete="off" required>
+                                            <button type="submit" class="btn btn-primary"><i
+                                                    class="bi bi-send"></i></button>
                                         </form>
                                     </div>
                                 </div>

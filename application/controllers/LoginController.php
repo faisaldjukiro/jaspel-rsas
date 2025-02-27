@@ -49,28 +49,22 @@ class LoginController extends CI_Controller
     }
 
     public function captcha()
-{
-    $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz123456789';
-    $captchaText = substr(str_shuffle($characters), 0, 6); // Ambil 6 karakter acak
-    $this->session->set_userdata('captcha', $captchaText);
-    $image = imagecreate(150, 50);
-    $bgColor = imagecolorallocate($image, 240, 240, 240); // Warna latar belakang
-    $textColor = imagecolorallocate($image, 50, 50, 50); // Warna teks
-    $lineColor = imagecolorallocate($image, 100, 100, 100); // Warna garis acak
-
-    // Tambahkan garis acak sebagai gangguan
-    for ($i = 0; $i < 5; $i++) {
-        imageline($image, rand(0, 150), rand(0, 50), rand(0, 150), rand(0, 50), $lineColor);
+    {
+        $characters = 'abcdefghijklmnopqrstuvwxyz';
+        $captchaText = substr(str_shuffle($characters), 0, 6);
+        $this->session->set_userdata('captcha', $captchaText);
+        $image = imagecreate(150, 50);
+        $bgColor = imagecolorallocate($image, 240, 240, 240);
+        $textColor = imagecolorallocate($image, 50, 50, 50);
+        $lineColor = imagecolorallocate($image, 100, 100, 100);
+        for ($i = 0; $i < 5; $i++) {
+            imageline($image, rand(0, 150), rand(0, 50), rand(0, 150), rand(0, 50), $lineColor);
+        }
+        imagestring($image, 5, 40, 15, $captchaText, $textColor);
+        header("Content-type: image/png");
+        imagepng($image);
+        imagedestroy($image);
     }
-
-    // Tambahkan teks CAPTCHA ke gambar
-    imagestring($image, 5, 40, 15, $captchaText, $textColor);
-
-    // Kirim gambar sebagai output
-    header("Content-type: image/png");
-    imagepng($image);
-    imagedestroy($image);
-}
     
     public function logout()
     {
