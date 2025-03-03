@@ -95,12 +95,17 @@
                                             </td>
                                             <td>
                                                 <a href="<?= base_url('chat/' . $pesan['id_informasi']); ?>"
-                                                    target="_blank">
-                                                    <button class="btn btn-success btn-sm ">
+                                                    target="_blank" class="position-relative">
+                                                    <button class="btn btn-success btn-sm btn-chat"
+                                                        data-id="<?= $pesan['id_informasi']; ?>">
                                                         <i class="bi bi-messenger"></i>
+                                                        <span id="notif-<?= $pesan['id_informasi']; ?>"
+                                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                                            style="display: none;">0</span>
                                                     </button>
                                                 </a>
                                             </td>
+
 
                                             <?php if ($this->session->userdata('role') == 1 || $this->session->userdata('role') == 5): ?>
                                             <td>
@@ -309,7 +314,32 @@
         });
     });
     </script>
+    <script>
+    function checkNewMessages(idInformasi) {
+        $.ajax({
+            url: "<?= base_url('PesanController/get_unread_messages/') ?>" + idInformasi,
+            type: "GET",
+            dataType: "json",
+            success: function(response) {
+                if (response.count > 0) {
+                    $("#notif-" + idInformasi).text(response.count).show();
+                } else {
+                    $("#notif-" + idInformasi).hide();
+                }
+            }
+        });
+    }
 
+    $(document).ready(function() {
+        $(".btn-chat").each(function() {
+            let idInformasi = $(this).data("id");
+            checkNewMessages(idInformasi);
+            setInterval(function() {
+                checkNewMessages(idInformasi);
+            }, 5000); // Cek setiap 5 detik
+        });
+    });
+    </script>
 </body>
 
 </html>

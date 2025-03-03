@@ -39,11 +39,10 @@ class PegawaiController extends CI_Controller
 	{
 		$data['title'] = "Jasa Pegawai";
 	
-		$grup = urldecode($grup);
-		$ruangan = urldecode($ruangan);
+		$grup = urldecode(urldecode($grup));
+		$ruangan = urldecode(urldecode($ruangan));
 		$grup = str_replace('+', ' ', $grup);
 		$ruangan = str_replace('+', ' ', $ruangan);
-	
 		$this->db->select('*');
 		$this->db->from('simulasi_jasa_finish');
 		if ($grup !== 'all' && !empty($grup)) {
@@ -142,6 +141,15 @@ class PegawaiController extends CI_Controller
 						'MOHAMAD RIFAI HIOLA, S.Kom', 'RULAN POBI, SH', 'YULFAN ANGGOWA, S.KM', 'MEMY S. BEMPAH, SKM',
 						'YANTO YOESOEF PONTOH, SE', 'IRAMAYA ERAKU, SE', 'NURHAYATI F. NASIBU, SE',
 						'RAHMAWATY MONOARFA, SE', 'ARIFSANDI SUPARNO TOME, S.KM', 'RAHMAN LUAWO, S.ST'
+					],
+					'Manajemen-direktur' => [
+						'Dr. MOHAMMAD KASIM M.Sc.Apt'
+					],
+					'Manajemen-wadir-2' => [
+						'H. HANSMI JAHJA SE.M.Ec.Dev'
+					],
+					'Manajemen-wadir-1' => [
+						'dr. BOBY HARUN OKO M.Kes'
 					]
 				];
 				foreach ($update_mappings as $kelompok => $nama_pegawai_list) {

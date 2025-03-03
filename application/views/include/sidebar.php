@@ -107,6 +107,9 @@
                     <a href="<?php echo base_url('informasi'); ?>" class='sidebar-link'>
                         <i class="bi bi-messenger"></i>
                         <span>Casemix Chat</span>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3
+                        </span>
                     </a>
                 </li>
                 <?php endif; ?>
@@ -136,6 +139,10 @@
                     <a href="<?php echo base_url('informasi'); ?>" class='sidebar-link'>
                         <i class="bi bi-messenger"></i>
                         <span>Casemix Chat</span>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3
+                            <!-- Angka ini bisa diganti nanti -->
+                        </span>
                     </a>
                 </li>
                 <?php endif; ?>

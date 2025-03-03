@@ -48,7 +48,6 @@
                                             $selectedGrup = urldecode($this->uri->segment(2));
                                             foreach ($grup as $g) : 
                                                 $grupValue = urlencode($g['grup']); 
-
                                                 $isSelected = ($selectedGrup == $grupValue) ? 'selected' : ''; 
                                             ?>
                                         <option

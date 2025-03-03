@@ -19,11 +19,8 @@ class PesanController extends CI_Controller
         $role = $this->session->userdata('role');
 		$nama_pegawai = $this->session->userdata('nama_pegawai');
         $username = $this->session->userdata('username');
-
         $data['title'] = "Informasi - " . (!empty($nama_pegawai) ? $nama_pegawai : "Dokter");
         $data['pegawai'] = $this->db->like('nama_pegawai', 'sp.')->get('tb_user')->result_array();
-
-
         if ($role == 1) {
             $data['informasi'] = $this->db->order_by('id_informasi', 'DESC')
                                         ->get_where('tb_informasi', ['status' =>'0'])    
@@ -36,6 +33,16 @@ class PesanController extends CI_Controller
 		$this->load->view('pages/pesan/informasi', $data);
 
 	}
+    public function get_unread_messages($id_informasi)
+    {
+        $user_kd_peg = $this->session->userdata('username');
+        $this->db->where('id_informasi', $id_informasi);
+        $this->db->where('read', 0);
+        $this->db->where('kd_pegawai !=', $user_kd_peg);
+        $unread_count = $this->db->count_all_results('tb_informasi_chat');
+        echo json_encode(['count' => $unread_count]);
+    }
+    
     public function chating($id)
     {
         $data['title'] = "Chatting";
