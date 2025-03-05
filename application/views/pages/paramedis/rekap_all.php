@@ -3,6 +3,60 @@
 
 <head>
     <?php $this->load->view('include/head'); ?>
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.4/css/fixedHeader.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.min.js"></script>
+
+    <style>
+    #kasuskosong {
+        font-size: 18px;
+    }
+
+    #kasuskosong thead th {
+        background: linear-gradient(45deg, #1E3C72, #2A5298);
+
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 12px;
+        text-align: center;
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    #kasuskosong tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    #kasuskosong tbody td {
+        padding: 12px;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    #kasuskosong tfoot td {
+        background: linear-gradient(45deg, #D31027, #EA384D);
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        padding: 12px;
+    }
+
+    #kasuskosong,
+    #kasuskosong th,
+    #kasuskosong td {
+        border: 1px solid #dee2e6;
+    }
+
+    #kasuskosong tbody tr:hover {
+        background-color: #d1ecf1;
+    }
+
+    #kasuskosong thead {
+        position: sticky;
+        top: 0;
+        background: linear-gradient(45deg, #D31027, #EA384D);
+        z-index: 100;
+    }
+    </style>
 </head>
 
 <body>
@@ -88,8 +142,8 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped" width="100%" id="kasuskosong">
+                            <div class="table-responsive " style="max-height: 900px; overflow-y: auto;">
+                                <table id="kasuskosong" class="table table-striped" width="100%">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -132,7 +186,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td colspan="9" class="text-center"><b>TOTAL</b></td>
+                                            <td colspan="10" class="text-center"><b>TOTAL</b></td>
                                             <td><b><?= format_rupiah($total_sisa_jasa) ?></b></td>
                                         </tr>
                                     </tfoot>
@@ -160,7 +214,7 @@
         window.location.href = url;
     });
     document.getElementById("btnExport").addEventListener("click", function(e) {
-        e.preventDefault(); // Hindari form submit saat klik export
+        e.preventDefault();
 
         var grup = encodeURIComponent(document.getElementById("grup").value);
         var ruangan = encodeURIComponent(document.getElementById("ruangan").value);
@@ -170,11 +224,37 @@
             url += "/" + grup + "/" + ruangan;
         }
 
-        window.location.href = url; // Redirect untuk export
+        window.location.href = url;
     });
     </script>
 
+    <script>
+    $(document).ready(function() {
+        if ($.fn.DataTable.isDataTable('#kasuskosong')) {
+            $('#kasuskosong').DataTable().destroy();
+        }
 
+        $('#kasuskosong').DataTable({
+            responsive: true,
+            paging: true,
+            searching: true,
+            ordering: true,
+            info: false,
+            fixedHeader: true,
+            pageLength: 100,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            language: {
+                paginate: {
+                    previous: "<",
+                    next: ">"
+                }
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>
