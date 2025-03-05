@@ -89,11 +89,12 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table" width="100%" id="kasuskosong">
+                                <table class="table table-striped" width="100%" id="kasuskosong">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Group</th>
+                                            <th>Kelompok Pegawai</th>
                                             <th>Nama Pegawai</th>
                                             <th>Ruangan</th>
                                             <th>Jabatan</th>
@@ -114,6 +115,7 @@
                                         <tr>
                                             <td><?= $no++; ?></td>
                                             <td><?= $paramedis['grup'] ?></td>
+                                            <td><?= $paramedis['kelompok_pegawai'] ?></td>
                                             <td><?= $paramedis['nama_pegawai'] ?></td>
                                             <td><?= $paramedis['ruangan'] ?></td>
                                             <td><?= $paramedis['jabatan'] ?></td>

@@ -89,6 +89,7 @@ class ExportController extends CI_Controller
         $sheet->setCellValue('H1', 'Gaji Pokok');
         $sheet->setCellValue('I1', 'Sangsi');
         $sheet->setCellValue('J1', 'Jasa Diterima');
+        $sheet->setCellValue('K1', 'Kelompok Pegawai');
 
         $row = 2;
         $no = 1;
@@ -103,6 +104,7 @@ class ExportController extends CI_Controller
             $sheet->setCellValue('H' . $row, $paramedis['gaji_pokok']);
             $sheet->setCellValue('I' . $row, $paramedis['nama_pengurangan']);
             $sheet->setCellValue('J' . $row, $paramedis['sisa_jasa_pegawai']);
+            $sheet->setCellValue('K' . $row, $paramedis['kelompok_pegawai']);
             $row++;
         }
 
