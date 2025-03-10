@@ -201,23 +201,23 @@ class M_rekap extends CI_Model
         
     private function hitungDokterSpesialis()
     {
-        return '((data_fix.jumlah * 0.43) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100))';
+        return '((data_fix.jumlah * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100))';
     }
 
     private function hitungPenunjang()
     {
-        return '((data_fix.jumlah * 0.43) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100))';
+        return '((data_fix.jumlah * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100))';
     }
     private function hitungPenunjang2()
     {
-        return '((data_fix.jumlah_sebelum_dikurangi * 0.43) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100))';
+        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100))';
     }
 
     private function hitungSisaJasa()
     {
-        return '((data_fix.jumlah * 0.43) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) 
+        return '((data_fix.jumlah * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) 
                  - 
-                 (SELECT SUM((data_fix.jumlah * 0.43) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100)) 
+                 (SELECT SUM((data_fix.jumlah * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100)) 
                   FROM data_fix AS df 
                   LEFT JOIN index_layanan AS i ON df.kd_dpjp = i.nama 
                   LEFT JOIN kasus AS k ON df.id_kasus = k.id_kasus 
@@ -225,9 +225,9 @@ class M_rekap extends CI_Model
     }
     private function hitungSisaJasa2()
     {
-        return '((data_fix.jumlah_sebelum_dikurangi * 0.43) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) 
+        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) 
                  - 
-                 (SELECT SUM((data_fix.jumlah_sebelum_dikurangi * 0.43) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100)) 
+                 (SELECT SUM((data_fix.jumlah_sebelum_dikurangi * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100)) 
                   FROM data_fix AS df 
                   LEFT JOIN index_layanan AS i ON df.kd_dpjp = i.nama 
                   LEFT JOIN kasus AS k ON df.id_kasus = k.id_kasus 
@@ -486,11 +486,11 @@ class M_rekap extends CI_Model
                                     a.rawat,
                                     a.nama,
                                     a.jumlah,
-                                    (a.jumlah * 0.52) AS sarana,
-                                    (a.jumlah * 0.43 * b.admin/100) AS admin,
-                                    (a.jumlah * 0.43 * b.dr_umum/100) AS dokter_umum,
-                                    (a.jumlah * 0.43 * b.spesialis_paramedis/100 * b.paramedis/100) AS paramedis,
-                                    (a.jumlah * 0.43 * b.spesialis_paramedis/100 * b.dr_spesialis/100) AS dokter_spesialis
+                                    (a.jumlah * b.sarana/100) AS sarana,
+                                    (a.jumlah * b.pelayanan/100 * b.admin/100) AS admin,
+                                    (a.jumlah * b.pelayanan/100 * b.dr_umum/100) AS dokter_umum,
+                                    (a.jumlah * b.pelayanan/100 * b.spesialis_paramedis/100 * b.paramedis/100) AS paramedis,
+                                    (a.jumlah * b.pelayanan/100 * b.spesialis_paramedis/100 * b.dr_spesialis/100) AS dokter_spesialis
                                     FROM
                                     data_fix AS a
                                     LEFT JOIN kasus AS b ON a.id_kasus = b.id_kasus"
