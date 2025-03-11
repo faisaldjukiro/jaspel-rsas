@@ -37,7 +37,7 @@
                     <div class="card shadow">
 
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="card-title mb-0">Rincian Dokter</h5>
+                            <h5 class="card-title mb-0">Rincian Dokter Semua</h5>
                             <div class="d-flex gap-2">
                                 <a href="<?php echo base_url('rekap-semua') ?>">
                                     <button class="btn btn-primary btn-sm">
@@ -49,9 +49,7 @@
                                         <i class="bi bi-list-columns-reverse"></i> Rekap Dokter
                                     </button>
                                 </a>
-                                <!-- <button id="exportBtn" class="btn btn-success">
-                                    <i class="bi bi-bar-chart-fill"></i> Export
-                                </button> -->
+
                             </div>
                         </div>
 
@@ -69,15 +67,6 @@
                                             <th>Klaim</th>
                                             <th>Kode</th>
                                             <th>Dokter Spesialis</th>
-                                            <!-- <th class="d-none">>Penunjang</th> -->
-                                            <!-- <th>Sisa Jasa</th>
-                                            <th>Jasa Operator</th>
-                                            <th>Jasa Anestesi</th> -->
-                                            <!-- <th>Porsi Dpjp</th> -->
-                                            <!-- <th>Index Djpjp Utama</th> -->
-                                            <!-- <th>Jasa Dpjp Utama</th> -->
-                                            <!-- <th>Index Djpjp2 Dst</th> -->
-                                            <!-- <th>Jasa Dpjp2 Dst</th> -->
                                             <th>Jasa Diterima</th>
                                         </tr>
                                     </thead>
@@ -158,43 +147,6 @@
                         return 'Rp ' + parseInt(data).toLocaleString('id-ID');
                     }
                 },
-                // {
-                //     "data": "penunjang",
-                //     "render": function(data, type, row) {
-                //         return 'Rp ' + parseInt(data).toLocaleString('id-ID');
-                //     }
-                // },
-                // {
-                //     "data": "sisa_jasa",
-                //     "render": function(data, type, row) {
-                //         return 'Rp ' + parseInt(data).toLocaleString('id-ID');
-                //     }
-                // },
-                // {
-                //     "data": "jasa_operator",
-                //     "render": function(data, type, row) {
-                //         return 'Rp ' + parseInt(data).toLocaleString('id-ID');
-                //     }
-                // },
-                // {
-                //     "data": "jasa_anestesi",
-                //     "render": function(data, type, row) {
-                //         return 'Rp ' + parseInt(data).toLocaleString('id-ID');
-                //     }
-                // },
-                // {
-                //     "data": "jasa_dpjp_utama",
-                //     "render": function(data, type, row) {
-                //         return 'Rp ' + parseInt(data).toLocaleString('id-ID');
-                //     }
-                // },
-                // {
-                //     "data": "jasa_dpjp2_dst",
-                //     "render": function(data, type, row) {
-                //         return 'Rp ' + parseInt(data).toLocaleString('id-ID');
-                //     },
-                // },
-
                 {
                     "data": null,
                     "render": function(data, type, row) {

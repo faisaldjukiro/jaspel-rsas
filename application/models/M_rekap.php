@@ -7,13 +7,13 @@ class M_rekap extends CI_Model
         $this->db->select('d.dpjp_utama as index_dpjp_utama, d.dpjp2_dst as index_dpjp2_dst');
         $this->db->select('k.dr_spesialis as porsi_dokter');
         $this->db->select($this->hitungPorsiDpjp() . ' AS porsi_dpjp');
-        $this->db->select($this->hitungDokterSpesialis() . ' AS dokter_spesialis_final');
-        $this->db->select($this->hitungSisaJasa() . ' AS sisa_jasa');
-        $this->db->select($this->hitungPenunjang() . ' AS penunjang');
-        $this->db->select($this->hitungJasaOperator() . ' AS jasa_operator');
-        $this->db->select($this->hitungJasaAnestesi() . ' AS jasa_anestesi');
-        $this->db->select($this->hitungJasaDpjpUtama() . ' AS jasa_dpjp_utama');
-        $this->db->select($this->hitungJasaDpjp2Dst() . ' AS jasa_dpjp2_dst');
+        $this->db->select($this->hitungDokterSpesialis2() . ' AS dokter_spesialis_final');
+        $this->db->select($this->hitungSisaJasa2() . ' AS sisa_jasa');
+        $this->db->select($this->hitungPenunjang2() . ' AS penunjang');
+        $this->db->select($this->hitungJasaOperator2() . ' AS jasa_operator');
+        $this->db->select($this->hitungJasaAnestesi2() . ' AS jasa_anestesi');
+        $this->db->select($this->hitungJasaDpjpUtama2() . ' AS jasa_dpjp_utama');
+        $this->db->select($this->hitungJasaDpjp2Dst2() . ' AS jasa_dpjp2_dst');
         $this->db->from('data_fix');
         $this->db->join('index_layanan AS i', 'data_fix.kd_dpjp = i.nama', 'left');
         $this->db->join('kasus AS k', 'data_fix.id_kasus = k.id_kasus', 'left');
@@ -23,9 +23,9 @@ class M_rekap extends CI_Model
 
     public function getRekapByNosep($nosep)
     {
-        $this->db->select('data_fix.nosep, data_fix.kasus, data_fix.rawat, data_fix.nama as nama_pasien, data_fix.dokter, data_fix.jumlah, data_fix.kd_dpjp');
+        $this->db->select('data_fix.nosep, data_fix.kasus, data_fix.rawat, data_fix.nama as nama_pasien, data_fix.dokter, data_fix.jumlah, data_fix.kd_dpjp,data_fix.jumlah_sebelum_dikurangi');
         $this->db->select('k.dr_spesialis as porsi_dokter');
-        $this->db->select($this->hitungDokterSpesialis() . ' AS dokter_spesialis_final');
+        $this->db->select($this->hitungDokterSpesialis2() . ' AS dokter_spesialis_final');
         $this->db->select($this->hitungPenunjang() . ' AS penunjang');
         $this->db->select($this->hitungPenunjang2() . ' AS penunjang2');
         $this->db->select($this->hitungSisaJasa() . ' AS sisa_jasa');
@@ -48,8 +48,8 @@ class M_rekap extends CI_Model
     }
     public function getRekapByDokter($dokter)
     {
-        $this->db->select('data_fix.nosep, data_fix.kasus, data_fix.rawat, data_fix.nama as nama_pasien, data_fix.dokter, data_fix.jumlah, data_fix.kd_dpjp');
-        $this->db->select($this->hitungDokterSpesialis() . ' AS dokter_spesialis_final');
+        $this->db->select('data_fix.nosep, data_fix.kasus, data_fix.rawat, data_fix.nama as nama_pasien, data_fix.dokter, data_fix.jumlah, data_fix.kd_dpjp,data_fix.jumlah_sebelum_dikurangi');
+        $this->db->select($this->hitungDokterSpesialis2() . ' AS dokter_spesialis_final');
         $this->db->select($this->hitungPenunjang() . ' AS penunjang');
         $this->db->select($this->hitungPenunjang2() . ' AS penunjang2');
         $this->db->select($this->hitungSisaJasa() . ' AS sisa_jasa');
@@ -76,25 +76,25 @@ class M_rekap extends CI_Model
     {
 
         $this->db->select('data_fix.dokter');
-        $this->db->select('SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" THEN ' . $this->hitungPenunjang() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst() . ' ELSE 0 END) AS total_jasa', false);
+        $this->db->select('SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END) AS total_jasa', false);
         $this->db->select('(
-                    (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" THEN ' . $this->hitungPenunjang() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst() . ' ELSE 0 END)
-                    ) * 0.2) AS jasa_20_persen', false);
+                    (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END)
+                    ) * 0.1) AS jasa_20_persen', false);
         $this->db->select('(
-                    (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" THEN ' . $this->hitungPenunjang() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama() . ' ELSE 0 END) +
-                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst() . ' ELSE 0 END)
-                    ) * 0.8) AS jasa_80_persen', false);
+                    (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
+                    SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END)
+                    ) * 0.9) AS jasa_80_persen', false);
                        
         $this->db->select('
                         CASE 
@@ -114,20 +114,20 @@ class M_rekap extends CI_Model
                         THEN ((' . $this->total20persen() . ') / (' . $this->jumlah_dokterspesialis() . ')) + 
                              (
                                 (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" 
-                                    THEN ' . $this->hitungPenunjang() . ' ELSE 0 END) +
-                                SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator() . ' ELSE 0 END) +
-                                SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi() . ' ELSE 0 END) +
-                                SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama() . ' ELSE 0 END) +
-                                SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst() . ' ELSE 0 END)
+                                    THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
+                                SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
+                                SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
+                                SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
+                                SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END)
                                 ) * 0.8
                              )
                         ELSE (
                                 (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" 
-                                    THEN ' . $this->hitungPenunjang() . ' ELSE 0 END) +
-                                SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator() . ' ELSE 0 END) +
-                                SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi() . ' ELSE 0 END) +
-                                SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama() . ' ELSE 0 END) +
-                                SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst() . ' ELSE 0 END)
+                                    THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
+                                SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
+                                SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
+                                SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
+                                SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END)
                                 ) * 0.8
                              )
                     END AS jasa_diterima', false);
@@ -175,12 +175,12 @@ class M_rekap extends CI_Model
             SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" 
                      OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" 
                      OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" 
-                     THEN ' . $this->hitungPenunjang() . ' ELSE 0 END) + 
-            SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator() . ' ELSE 0 END) + 
-            SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi() . ' ELSE 0 END) + 
-            SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama() . ' ELSE 0 END) + 
-            SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst() . ' ELSE 0 END) 
-        ) * 0.2';
+                     THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) + 
+            SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) + 
+            SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) + 
+            SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) + 
+            SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END) 
+        ) * 0.1';
     }
         
     private function jumlah_dokterspesialis()
@@ -202,6 +202,10 @@ class M_rekap extends CI_Model
     private function hitungDokterSpesialis()
     {
         return '((data_fix.jumlah * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100))';
+    }
+    private function hitungDokterSpesialis2()
+    {
+        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100))';
     }
 
     private function hitungPenunjang()

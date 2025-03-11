@@ -5,7 +5,6 @@ class RekapController extends CI_Controller
 {
 	public function __construct()
     {
-        // if ($role != 10 && $role != 5) {
 		parent::__construct();
 		$role = $this->session->userdata('role');
 		if (empty($role)) { 
@@ -17,7 +16,7 @@ class RekapController extends CI_Controller
 
 	public function getRekap()
 	{
-		$data['title'] = "Rincian Dokter";
+		$data['title'] = "Rincian Dokter All";
 		$this->load->view('rekap', $data);
 	}
 	public function getRekapBynosep($nosep)
@@ -98,9 +97,6 @@ class RekapController extends CI_Controller
 		}
 		return $this->db->count_all_results();
 	}
-
-
-	
 
 	private function getJumlahJasa($row)
 	{

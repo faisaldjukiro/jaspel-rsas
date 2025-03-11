@@ -117,10 +117,10 @@ a {
                                         <tr>
                                             <th>No</th>
                                             <th>Dokter</th>
-                                            <th>Jasa Belum Dikurangi (Resep Obat & BHP)</th>
-                                            <th>Jasa Setelah Dikurangi</th>
-                                            <th>20% Jasa Kebersamaan</th>
-                                            <th>80% Jasa Langsung</th>
+                                            <th>Total Jasa</th>
+                                            <!-- <th>Jasa Setelah Dikurangi</th> -->
+                                            <th>10% Jasa Kebersamaan</th>
+                                            <th>90% Jasa Langsung</th>
                                             <th>Jumlah Dokter</th>
                                             <th>Jasa Kebersamaan</th>
                                             <th>Jasa Diterima</th>
@@ -129,7 +129,7 @@ a {
                                     <tbody>
                                         <?php
                                         $no = 1;
-                                        $total_jasa_all = 1;
+                                        // $total_jasa_all = 1;
                                         $total_jasa_all2 = 0;
                                         $total_20_persen = 0;
                                         $total_80_persen = 0;
@@ -137,7 +137,7 @@ a {
                                         $total_jasa_diterima = 1;
                                         foreach ($rekap_dokter as $dokter):
                                             $total_jasa_all2 += $dokter['jasa_belum_dikurangi'];
-                                            $total_jasa_all += $dokter['total_jasa'];
+                                            // $total_jasa_all += $dokter['total_jasa'];
                                             $total_20_persen += $dokter['jasa_20_persen'];
                                             $total_80_persen += $dokter['jasa_80_persen'];
                                             $total_jasa_diterima += $dokter['jasa_diterima'];
@@ -151,7 +151,7 @@ a {
                                                 </a>
                                             </td>
                                             <td><?= format_rupiah($dokter['jasa_belum_dikurangi']) ?></td>
-                                            <td><?= format_rupiah($dokter['total_jasa']) ?></td>
+                                            <!-- <td><?= format_rupiah($dokter['total_jasa']) ?></td> -->
                                             <td><?= format_rupiah($dokter['jasa_20_persen']) ?></td>
                                             <td><?= format_rupiah($dokter['jasa_80_persen']) ?></td>
                                             <td><?= $dokter['jumlah_dokter'] ?></td>
@@ -164,7 +164,7 @@ a {
                                         <tr>
                                             <td colspan="2" class="text-center"><b>TOTAL</b></td>
                                             <td class="text-center"><b><?= format_rupiah($total_jasa_all2) ?></b></td>
-                                            <td class="text-center"><b><?= format_rupiah($total_jasa_all) ?></b></td>
+                                            <!-- <td class="text-center"><b><?= format_rupiah($total_jasa_all) ?></b></td> -->
                                             <td class="text-center"><b><?= format_rupiah($total_20_persen) ?></b></td>
                                             <td class="text-center"><b><?= format_rupiah($total_80_persen) ?></b></td>
                                             <td></td>

@@ -31,21 +31,21 @@ class ExportController extends CI_Controller
             $sheet->setCellValue('D' . $row, $data['rawat']);
             $sheet->setCellValue('E' . $row, $data['nama_pasien']);
             $sheet->setCellValue('F' . $row, $data['dokter']);
-            $sheet->setCellValue('G' . $row, $data['jumlah']);
+            $sheet->setCellValue('G' . $row, $data['jumlah_sebelum_dikurangi']);
             $sheet->setCellValue('H' . $row, $data['kd_dpjp']);
             $sheet->setCellValue('I' . $row, $data['dokter_spesialis_final']);
 
             $jasaDiterima = 0;
             if ($data['kd_dpjp'] == 'dpjp_utama') {
-                $jasaDiterima = $data['jasa_dpjp_utama'];
+                $jasaDiterima = $data['jasa_dpjp_utama2'];
             } elseif ($data['kd_dpjp'] == 'dpjp2_dst') {
-                $jasaDiterima = $data['jasa_dpjp2_dst'];
+                $jasaDiterima = $data['jasa_dpjp2_dst2'];
             } elseif ($data['kd_dpjp'] == 'jasa operasi') {
-                $jasaDiterima = $data['jasa_operator'];
+                $jasaDiterima = $data['jasa_operator2'];
             } elseif ($data['kd_dpjp'] == 'jasa anestesi') {
-                $jasaDiterima = $data['jasa_anestesi'];
+                $jasaDiterima = $data['jasa_anestesi2'];
             } elseif (in_array($data['kd_dpjp'], ['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN', 'MRI', 'KONSUL'])) {
-                $jasaDiterima = $data['penunjang'];
+                $jasaDiterima = $data['penunjang2'];
             }
 
             $sheet->setCellValue('J' . $row, $jasaDiterima);

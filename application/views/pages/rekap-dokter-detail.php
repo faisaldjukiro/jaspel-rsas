@@ -49,7 +49,16 @@
                             </button>
                         </div>
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6 class="card-title mb-0">Rincian / Dokter</h6>
+                            <h6 class="card-title mb-0">Rincian
+                                <?php 
+                                    $dokter = $dokter_pasien[0]['dokter'];
+                                    $dokter = urldecode($dokter);
+                                    $dokter = preg_replace('/[^a-zA-Z\s.]/', '', $dokter);
+                                    echo $dokter;
+                                ?>
+                            </h6>
+
+
                             <div class="d-flex gap-2">
                                 <?php if (!empty($dokter_pasien)): ?>
                                 <a href="<?= base_url('export-data/' . rawurlencode($dokter_pasien[0]['dokter'])) ?>">
@@ -75,47 +84,27 @@
                                             <th>Klaim</th>
                                             <th>Kode</th>
                                             <th>Dokter Spesialis</th>
-                                            <!-- <th>Penunjang</th>
-                                            <th>Sisa Jasa</th> -->
-                                            <!-- <th>Jasa Operator</th>
-                                            <th>Jasa Anestesi</th> -->
-                                            <!-- <th>Porsi Dpjp</th> -->
-                                            <!-- <th>Index Djpjp Utama</th> -->
-                                            <!-- <th>Jasa Dpjp Utama</th> -->
-                                            <!-- <th>Index Djpjp2 Dst</th> -->
-                                            <!-- <th>Jasa Dpjp2 Dst</th> -->
-                                            <th>Jasa Belum Dikurangi (BHP)</th>
                                             <th>Jasa Diterima</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         $no = 1;
-                                        $total_dpjp_utama = 0;
                                         $total_dpjp_utama2 = 0;
-                                        $total_dpjp2_dst = 0;
                                         $total_dpjp2_dst2 = 0;
-                                        $total_operator = 0;
                                         $total_operator2 = 0;
-                                        $total_anestesi = 0;
                                         $total_anestesi2 = 0;
-                                        $total_penunjang = 0;
                                         $total_penunjang2 = 0;
                                         foreach ($dokter_pasien as $pasien):
                                             if ($pasien['kd_dpjp'] == 'dpjp_utama') {
-                                                $total_dpjp_utama += $pasien['jasa_dpjp_utama'];
                                                 $total_dpjp_utama2 += $pasien['jasa_dpjp_utama2'];
                                             } elseif ($pasien['kd_dpjp'] == 'dpjp2_dst') {
-                                                $total_dpjp2_dst += $pasien['jasa_dpjp2_dst'];
                                                 $total_dpjp2_dst2 += $pasien['jasa_dpjp2_dst2'];
                                             } elseif ($pasien['kd_dpjp'] == 'jasa operasi') {
-                                                $total_operator += $pasien['jasa_operator'];
                                                 $total_operator2 += $pasien['jasa_operator2'];
                                             } elseif ($pasien['kd_dpjp'] == 'jasa anestesi') {
-                                                $total_anestesi += $pasien['jasa_anestesi'];
                                                 $total_anestesi2 += $pasien['jasa_anestesi2'];
                                             } elseif (in_array($pasien['kd_dpjp'], ['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN', 'MRI', 'KONSUL'])) {
-                                                $total_penunjang += $pasien['penunjang'];
                                                 $total_penunjang2 += $pasien['penunjang2'];
                                             }
                                         ?>
@@ -128,15 +117,10 @@
                                             <td><?= $pasien['rawat'] ?></td>
                                             <td><?= $pasien['nama_pasien'] ?></td>
                                             <td><?= $pasien['dokter'] ?></td>
-                                            <td><?= format_rupiah($pasien['jumlah']) ?></td>
+                                            <td><?= format_rupiah($pasien['jumlah_sebelum_dikurangi']) ?></td>
                                             <td><?= $pasien['kd_dpjp'] ?></td>
                                             <td><?= format_rupiah($pasien['dokter_spesialis_final']) ?></td>
-                                            <!-- <td><?= format_rupiah($pasien['penunjang']) ?></td>
-                                            <td><?= format_rupiah($pasien['sisa_jasa']) ?></td> -->
-                                            <!-- <td><?= format_rupiah($pasien['jasa_operator']) ?></td>
-                                            <td><?= format_rupiah($pasien['jasa_anestesi']) ?></td> -->
-                                            <!-- <td><?= format_rupiah($pasien['jasa_dpjp_utama']) ?></td>
-                                            <td><?= format_rupiah($pasien['jasa_dpjp2_dst']) ?></td> -->
+
                                             <td>
                                                 <?php
                                                     if ($pasien['kd_dpjp'] == 'dpjp_utama') {
@@ -154,23 +138,6 @@
                                                     }
                                                     ?>
                                             </td>
-                                            <td>
-                                                <?php
-                                                    if ($pasien['kd_dpjp'] == 'dpjp_utama') {
-                                                        echo format_rupiah($pasien['jasa_dpjp_utama']);
-                                                    } elseif ($pasien['kd_dpjp'] == 'dpjp2_dst') {
-                                                        echo format_rupiah($pasien['jasa_dpjp2_dst']);
-                                                    } elseif ($pasien['kd_dpjp'] == 'jasa operasi') {
-                                                        echo format_rupiah($pasien['jasa_operator']);
-                                                    } elseif ($pasien['kd_dpjp'] == 'jasa anestesi') {
-                                                        echo format_rupiah($pasien['jasa_anestesi']);
-                                                    } elseif (in_array($pasien['kd_dpjp'], ['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN', 'MRI', 'KONSUL'])) {
-                                                        echo format_rupiah($pasien['penunjang']);
-                                                    } else {
-                                                        echo 'Tidak ada jasa yang cocok';
-                                                    }
-                                                    ?>
-                                            </td>
                                         </tr>
                                         <?php endforeach ?>
                                     </tbody>
@@ -178,7 +145,6 @@
                                         <tr>
                                             <td colspan="9" class="text-center"><b>TOTAL</b></td>
                                             <td><b><?= format_rupiah($total_dpjp_utama2 + $total_dpjp2_dst2 + $total_operator2 + $total_anestesi2 + $total_penunjang2) ?></b>
-                                            <td><b><?= format_rupiah($total_dpjp_utama + $total_dpjp2_dst + $total_operator + $total_anestesi + $total_penunjang) ?></b>
                                             </td>
                                         </tr>
                                     </tfoot>
