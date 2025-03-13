@@ -67,10 +67,10 @@ a {
                                             <th>Nama Pasien</th>
                                             <th>Klaim</th>
                                             <th>Sarana</th>
-                                            <th>Admin</th>
+                                            <th>Dokter Spesialis</th>
                                             <th>Dokter Umum</th>
                                             <th>Paramedis</th>
-                                            <th>Dokter Spesialis</th>
+                                            <th>Tenaga Penunjang Pelayanan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -81,14 +81,14 @@ a {
                                         $total_admin = 0;
                                         $total_dokter_umum = 0;
                                         $total_paramedis = 0;
-                                        $total_dokter_spesialis = 1;
+                                        $total_dokter_spesialis = 0;
                                         foreach ($semua_jasa as $semua):
-                                            $total_klaim += $semua['jumlah'];
+                                            $total_klaim += $semua['jumlah_sebelum_dikurangi'];
                                             $total_sarana += $semua['sarana'];
-                                            $total_admin += $semua['admin'];
+                                            $total_dokter_spesialis += $semua['dokter_spesialis'];
                                             $total_dokter_umum += $semua['dokter_umum'];
                                             $total_paramedis += $semua['paramedis'];
-                                            $total_dokter_spesialis += $semua['dokter_spesialis'];
+                                            $total_admin += $semua['admin'];
                                         ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
@@ -96,12 +96,12 @@ a {
                                             <td><?= $semua['kasus'] ?></td>
                                             <td><?= $semua['rawat'] ?></td>
                                             <td><?= $semua['nama'] ?></td>
-                                            <td><?= format_rupiah($semua['jumlah']) ?></td>
+                                            <td><?= format_rupiah($semua['jumlah_sebelum_dikurangi']) ?></td>
                                             <td><?= format_rupiah($semua['sarana']) ?></td>
-                                            <td><?= format_rupiah($semua['admin']) ?></td>
+                                            <td><?= format_rupiah($semua['dokter_spesialis']) ?></td>
                                             <td><?= format_rupiah($semua['dokter_umum']) ?></td>
                                             <td><?= format_rupiah($semua['paramedis']) ?></td>
-                                            <td><?= format_rupiah($semua['dokter_spesialis']) ?></td>
+                                            <td><?= format_rupiah($semua['admin']) ?></td>
                                         </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -110,10 +110,10 @@ a {
                                             <td colspan="5" class="text-center"><b>TOTAL JASA</b></td>
                                             <td><b><?= format_rupiah($total_klaim) ?></b></td>
                                             <td><b><?= format_rupiah($total_sarana) ?></b></td>
-                                            <td><b><?= format_rupiah($total_admin) ?></b></td>
+                                            <td><b><?= format_rupiah($total_dokter_spesialis) ?></b></td>
                                             <td><b><?= format_rupiah($total_dokter_umum) ?></b></td>
                                             <td><b><?= format_rupiah($total_paramedis) ?></b></td>
-                                            <td><b><?= format_rupiah($total_dokter_spesialis) ?></b></td>
+                                            <td><b><?= format_rupiah($total_admin) ?></b></td>
                                         </tr>
                                     </tfoot>
                                 </table>

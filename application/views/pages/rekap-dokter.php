@@ -134,7 +134,7 @@ a {
                                         $total_20_persen = 0;
                                         $total_80_persen = 0;
                                         $total_jasa_bersama = 0;
-                                        $total_jasa_diterima = 1;
+                                        $total_jasa_diterima = 0;
                                         foreach ($rekap_dokter as $dokter):
                                             $total_jasa_all2 += $dokter['jasa_belum_dikurangi'];
                                             // $total_jasa_all += $dokter['total_jasa'];
@@ -170,7 +170,6 @@ a {
                                             <td></td>
                                             <td class="text-center"><b><?= format_rupiah($total_jasa_bersama) ?></b>
                                             </td>
-
                                             <td class="text-center"><b><?= format_rupiah($total_jasa_diterima) ?></b>
                                             </td>
 

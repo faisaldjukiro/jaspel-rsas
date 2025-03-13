@@ -119,7 +119,7 @@ class M_rekap extends CI_Model
                                 SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
                                 SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
                                 SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END)
-                                ) * 0.8
+                                ) * 0.9
                              )
                         ELSE (
                                 (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" 
@@ -128,7 +128,7 @@ class M_rekap extends CI_Model
                                 SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
                                 SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
                                 SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END)
-                                ) * 0.8
+                                ) * 0.9
                              )
                     END AS jasa_diterima', false);
                 
@@ -489,12 +489,12 @@ class M_rekap extends CI_Model
                                     a.kasus,
                                     a.rawat,
                                     a.nama,
-                                    a.jumlah,
-                                    (a.jumlah * b.sarana/100) AS sarana,
-                                    (a.jumlah * b.pelayanan/100 * b.admin/100) AS admin,
-                                    (a.jumlah * b.pelayanan/100 * b.dr_umum/100) AS dokter_umum,
-                                    (a.jumlah * b.pelayanan/100 * b.spesialis_paramedis/100 * b.paramedis/100) AS paramedis,
-                                    (a.jumlah * b.pelayanan/100 * b.spesialis_paramedis/100 * b.dr_spesialis/100) AS dokter_spesialis
+                                    a.jumlah_sebelum_dikurangi,
+                                    (a.jumlah_sebelum_dikurangi * b.sarana/100) AS sarana,
+                                    (a.jumlah_sebelum_dikurangi * b.pelayanan/100 * b.admin/100) AS admin,
+                                    (a.jumlah_sebelum_dikurangi * b.pelayanan/100 * b.dr_umum/100) AS dokter_umum,
+                                    (a.jumlah_sebelum_dikurangi * b.pelayanan/100 * b.spesialis_paramedis/100 * b.paramedis/100) AS paramedis,
+                                    (a.jumlah_sebelum_dikurangi * b.pelayanan/100 * b.spesialis_paramedis/100 * b.dr_spesialis/100) AS dokter_spesialis
                                     FROM
                                     data_fix AS a
                                     LEFT JOIN kasus AS b ON a.id_kasus = b.id_kasus"
