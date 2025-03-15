@@ -76,20 +76,20 @@ class M_rekap extends CI_Model
     {
 
         $this->db->select('data_fix.dokter');
-        $this->db->select('SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
+        $this->db->select('SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" OR data_fix.kd_dpjp = "GIZI" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END) AS total_jasa', false);
         $this->db->select('(
-                    (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
+                    (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" OR data_fix.kd_dpjp = "GIZI" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END)
                     ) * 0.1) AS jasa_20_persen', false);
         $this->db->select('(
-                    (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
+                    (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" OR data_fix.kd_dpjp = "GIZI" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
@@ -103,7 +103,7 @@ class M_rekap extends CI_Model
                         END AS rata_jasa_20_persen', false);
         $this->db->select($this->jumlah_dokterspesialis() . ' AS jumlah_dokter');
         
-        $this->db->select('SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
+        $this->db->select('SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" OR data_fix.kd_dpjp = "GIZI" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
@@ -113,7 +113,7 @@ class M_rekap extends CI_Model
                         WHEN data_fix.dokter != "Dokter Umum" 
                         THEN ((' . $this->total20persen() . ') / (' . $this->jumlah_dokterspesialis() . ')) + 
                              (
-                                (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" 
+                                (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" OR data_fix.kd_dpjp = "GIZI"
                                     THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
                                 SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
                                 SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
@@ -122,7 +122,7 @@ class M_rekap extends CI_Model
                                 ) * 0.9
                              )
                         ELSE (
-                                (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" 
+                                (SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" OR data_fix.kd_dpjp = "GIZI"
                                     THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
                                 SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
                                 SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
@@ -174,7 +174,7 @@ class M_rekap extends CI_Model
         return '(
             SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" 
                      OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" 
-                     OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" 
+                     OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" OR data_fix.kd_dpjp = "GIZI"
                      THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) + 
             SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) + 
             SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) + 

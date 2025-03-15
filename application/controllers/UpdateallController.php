@@ -86,6 +86,11 @@ class UpdateallController extends CI_Controller
                             WHERE tindakan LIKE '%konsul%'");
         $response[] = ['step' => 6, 'message' => 'Kode dpjp KONSUL Berhasil Diperbarui'];
 
+        $this->db->query("UPDATE data_sim
+        SET kd_dpjp = 'GIZI'
+        WHERE dokter = 'DR. CECY RAHMA KARIM Sp.GK'");
+        $response[] = ['step' => 7, 'message' => 'Kode dpjp GIZI Berhasil Diperbarui']; 
+
         $this->db->query("UPDATE data_sim AS main_table
                             JOIN (
                                 SELECT nosep, 
@@ -111,7 +116,7 @@ class UpdateallController extends CI_Controller
                                 GROUP BY nosep
                             ) AS sub_table ON main_table.nosep = sub_table.nosep
                             SET main_table.ruangan = sub_table.ruangan_status");
-        $response[] = ['step' => 7, 'message' => 'Rawat Intensif Dan Biasa Berhasil Diperbarui'];
+        $response[] = ['step' => 8, 'message' => 'Rawat Intensif Dan Biasa Berhasil Diperbarui'];
 
         $this->db->query("UPDATE data_sim
                             SET kd_dpjp = 'dpjp_utama'
@@ -122,7 +127,7 @@ class UpdateallController extends CI_Controller
                                 AND klaim.dokter LIKE CONCAT('%', data_sim.dokter, '%')
                             )
                             AND ruangan != 'intensif'");
-        $response[] = ['step' => 8, 'message' => 'Dpjp Utama Like Dari Klaim Berhasil Diperbarui'];
+        $response[] = ['step' => 9, 'message' => 'Dpjp Utama Like Dari Klaim Berhasil Diperbarui'];
 
         $this->db->query("UPDATE data_sim
                             SET kd_dpjp = CASE
@@ -151,14 +156,14 @@ class UpdateallController extends CI_Controller
                                 ) THEN 'dpjp_utama'
                                 ELSE kd_dpjp
                             END");
-        $response[] = ['step' => 9, 'message' => 'Dpjp Utama Intensif Berhasil Diperbarui'];
+        $response[] = ['step' => 10, 'message' => 'Dpjp Utama Intensif Berhasil Diperbarui'];
 
         $this->db->query("UPDATE data_sim ds
                             JOIN data_dpjp_utama ddu
                             ON ds.nosep = ddu.nosep
                             SET ds.kd_dpjp = 'dpjp_utama'
                             WHERE ds.dokter = ddu.dokter");
-        $response[] = ['step' => 10, 'message' => 'Dpjp Utama Setelah Update Intensif Berhasil Diperbarui'];
+        $response[] = ['step' => 11, 'message' => 'Dpjp Utama Setelah Update Intensif Berhasil Diperbarui'];
 
         $this->db->query("UPDATE data_sim
                             SET kd_dpjp = 'dpjp_utama'
@@ -168,13 +173,13 @@ class UpdateallController extends CI_Controller
                             AND kd_dpjp NOT IN ('LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT-SCAN', 'MRI', 'KONSUL');
                             ");
 
-        $response[] = ['step' => 11, 'message' => 'Dpjp Utama Bedah Tanpa GA Berhasil Diperbarui'];
+        $response[] = ['step' => 12, 'message' => 'Dpjp Utama Bedah Tanpa GA Berhasil Diperbarui'];
 
         $this->db->query("UPDATE data_sim 
                             SET kd_dpjp = 'dpjp_utama' 
                             WHERE kasus = 'rajal IRD' 
                             AND layanan IN ('IRD', 'IRDA (ANAK)', 'IRDO (OBGYN)')");
-        $response[] = ['step' => 12, 'message' => 'Dpjp Utama IRD Rawat Jalan Berhasil Diperbarui'];
+        $response[] = ['step' => 13, 'message' => 'Dpjp Utama IRD Rawat Jalan Berhasil Diperbarui'];
 
         $this->db->query("UPDATE data_sim
         SET kd_dpjp = 
@@ -187,7 +192,7 @@ class UpdateallController extends CI_Controller
         WHERE 
             kasus IN ('bedah dengan GA', 'bedah tanpa GA') 
             AND komponen IN ('DR.OPERATOR', 'DR.ANESTESI')");
-        $response[] = ['step' => 13, 'message' => 'Kasus Bedah Berhasil Diperbarui'];
+        $response[] = ['step' => 14, 'message' => 'Kasus Bedah Berhasil Diperbarui'];
         
         $this->db->query("UPDATE data_sim
                             SET dokter = 'LABORATORIUM'
@@ -196,33 +201,33 @@ class UpdateallController extends CI_Controller
                                 'dr. NURLIANA IBRAHIM Sp.PK M.Kes',
                                 'dr. St. Rahma, M.Kes, Sp.Pk'
                             ) AND layanan = 'LABOLATORIUM'");
-        $response[] = ['step' => 14, 'message' => 'Nama Dokter LABORATORIUM Berhasil Diperbarui'];
+        $response[] = ['step' => 15, 'message' => 'Nama Dokter LABORATORIUM Berhasil Diperbarui'];
 
         $this->db->query("UPDATE data_sim
                             SET dokter = 'DR.ANESTESI'
                             WHERE komponen = 'DR.ANESTESI'
                             AND layanan = 'I B S / KAMAR OPERASI'");
-        $response[] = ['step' => 15, 'message' => 'Nama Dokter ANESTESI Berhasil Diperbarui'];
+        $response[] = ['step' => 16, 'message' => 'Nama Dokter ANESTESI Berhasil Diperbarui'];
 
         $this->db->query("UPDATE data_sim ds
                             JOIN kasus k ON ds.kasus = k.nama_kasus
                             SET ds.id_kasus = k.id_kasus");
-        $response[] = ['step' => 16, 'message' => 'ID Kasus Berhasil Diperbarui'];
+        $response[] = ['step' => 17, 'message' => 'ID Kasus Berhasil Diperbarui'];
 
         $this->db->query("DELETE FROM data_sim
                             WHERE layanan = 'RADIOLOGI' AND tindakan = 'EXPERTISE DOKTER AHLI'");
-        $response[] = ['step' => 17, 'message' => 'Hapus Tindakan EXPERTISE DOKTER AHLI (RADIOLOGI) Berhasil'];
+        $response[] = ['step' => 18, 'message' => 'Hapus Tindakan EXPERTISE DOKTER AHLI (RADIOLOGI) Berhasil'];
 
         $this->db->query("UPDATE data_sim
                                 SET dokter = 'DOKTER UMUM'
                                 WHERE dokter NOT LIKE '%Sp.%' 
                                 AND dokter NOT IN ('LABORATORIUM', 'DR.ANESTESI')");
-        $response[] = ['step' => 18, 'message' => 'Dokter Umum Berhasil Diperbarui'];
+        $response[] = ['step' => 19, 'message' => 'Dokter Umum Berhasil Diperbarui'];
         
         $this->db->query("UPDATE data_sim 
                             SET kd_dpjp = 'dpjp2_dst' 
                             WHERE kd_dpjp IS NULL OR kd_dpjp = '';");
-        $response[] = ['step' => 19, 'message' => 'Dpjp2 Dst Berhasil Diperbarui'];
+        $response[] = ['step' => 20, 'message' => 'Dpjp2 Dst Berhasil Diperbarui'];
 
         $this->db->query("INSERT INTO data_fix (nosep, kasus, rawat, nama, dokter, jumlah, kd_dpjp, id_kasus, point_dpjp, jumlah_point_dpjp, jumlah_operator, jumlah_sebelum_dikurangi, kd_peg)
                            SELECT
@@ -255,7 +260,7 @@ class UpdateallController extends CI_Controller
                                 a.kd_peg");
 
         if ($this->db->affected_rows() > 0) {
-            $response[] = ['step' => 20, 'message' => 'Data Untuk Perhitungan Telah Dibuat'];
+            $response[] = ['step' => 21, 'message' => 'Data Untuk Perhitungan Telah Dibuat'];
             } else {
             echo $this->db->error()['message']; 
            }
@@ -268,7 +273,7 @@ class UpdateallController extends CI_Controller
                                 WHEN kd_dpjp = 'dpjp2_dst' THEN 1
                                 ELSE 0
                             END");
-        $response[] = ['step' => 21, 'message' => 'Point Dpjp Berhasil Diperbarui'];
+        $response[] = ['step' => 22, 'message' => 'Point Dpjp Berhasil Diperbarui'];
 
         $this->db->query("UPDATE data_fix df
                             JOIN (
@@ -278,18 +283,19 @@ class UpdateallController extends CI_Controller
                                 GROUP BY nosep
                             ) subquery ON df.nosep = subquery.nosep
                             SET df.jumlah_operator = subquery.total_operator");
-        $response[] = ['step' => 22, 'message' => 'Jumlah Operator Berhasil Diperbarui'];
+        $response[] = ['step' => 23, 'message' => 'Jumlah Operator Berhasil Diperbarui'];
 
         $this->db->query("DELETE FROM data_fix
                             WHERE dokter = 'DOKTER UMUM' 
                             AND nosep IN (SELECT nosep FROM data_rawat_inap)");
-        $response[] = ['step' => 23, 'message' => 'Dokter Umum Berhasil Dihapus'];
+        $response[] = ['step' => 24, 'message' => 'Dokter Umum Berhasil Dihapus'];
         
         $this->db->query("UPDATE data_fix df
                                 JOIN jumlah_point_dpjp jp ON df.nosep = jp.nosep 
                             SET df.jumlah_point_dpjp = jp.total_point");
-        $response[] = ['step' => 24, 'message' => 'Jumlah Point Dpjp Berhasil Diperbarui'];
-                                
+        $response[] = ['step' => 25, 'message' => 'Jumlah Point Dpjp Berhasil Diperbarui'];
+        
+             
          // Selesai transaksi
          $this->db->trans_complete();
 
