@@ -491,10 +491,11 @@ class M_rekap extends CI_Model
                                     a.nama,
                                     a.jumlah_sebelum_dikurangi,
                                     (a.jumlah_sebelum_dikurangi * b.sarana/100) AS sarana,
-                                    (a.jumlah_sebelum_dikurangi * b.pelayanan/100 * b.admin/100) AS admin,
-                                    (a.jumlah_sebelum_dikurangi * b.pelayanan/100 * b.dr_umum/100) AS dokter_umum,
-                                    (a.jumlah_sebelum_dikurangi * b.pelayanan/100 * b.spesialis_paramedis/100 * b.paramedis/100) AS paramedis,
-                                    (a.jumlah_sebelum_dikurangi * b.pelayanan/100 * b.spesialis_paramedis/100 * b.dr_spesialis/100) AS dokter_spesialis
+                                    (a.jumlah_sebelum_dikurangi * b.pelayanan_total/100 * b.manajemen/100) AS manajemen,
+                                    (a.jumlah_sebelum_dikurangi * b.pelayanan_total/100 * b.pelayanan/100 * b.admin/100) AS admin,
+                                    (a.jumlah_sebelum_dikurangi * b.pelayanan_total/100 * b.pelayanan/100 * b.dr_umum/100) AS dokter_umum,
+                                    (a.jumlah_sebelum_dikurangi * b.pelayanan_total/100 * b.pelayanan/100 * b.spesialis_paramedis/100 * b.paramedis/100) AS paramedis,
+                                    (a.jumlah_sebelum_dikurangi * b.pelayanan_total/100 * b.pelayanan/100 * b.spesialis_paramedis/100 * b.dr_spesialis/100) AS dokter_spesialis
                                     FROM
                                     data_fix AS a
                                     LEFT JOIN kasus AS b ON a.id_kasus = b.id_kasus"

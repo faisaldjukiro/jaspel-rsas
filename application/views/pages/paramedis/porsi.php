@@ -60,7 +60,7 @@
                                         foreach ($dataporsi as $porsi): ?>
                                         <tr>
                                             <td><?= $no++; ?></td>
-                                            <td><?= $porsi['pengelompokan'] ?></td>
+                                            <td><strong><?= $porsi['pengelompokan'] ?></strong></td>
                                             <td><?= format_rupiah($porsi['total_jasa']) ?></td>
                                             <td><?= $porsi['kebersamaan'] ?></td>
                                             <td><?= format_rupiah($porsi['angka_kebersamaan']) ?></td>

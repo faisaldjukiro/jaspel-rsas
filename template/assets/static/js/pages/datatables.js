@@ -20,7 +20,7 @@ let dokter_datatable = $("#dokter").DataTable({
 })
 let poliklinik_datatable = $("#tindakanpoliklinik").DataTable({
     responsive: true,
-    "pageLength": 25,
+    "pageLength": 10,
 })
 let ird_datatable = $("#tindakanird").DataTable({
     responsive: true,
