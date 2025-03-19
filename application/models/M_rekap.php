@@ -201,27 +201,27 @@ class M_rekap extends CI_Model
         
     private function hitungDokterSpesialis()
     {
-        return '((data_fix.jumlah * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100))';
+        return '((data_fix.jumlah * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100))';
     }
     private function hitungDokterSpesialis2()
     {
-        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100))';
+        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100))';
     }
 
     private function hitungPenunjang()
     {
-        return '((data_fix.jumlah * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100))';
+        return '((data_fix.jumlah * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100))';
     }
     private function hitungPenunjang2()
     {
-        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100))';
+        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100))';
     }
 
     private function hitungSisaJasa()
     {
-        return '((data_fix.jumlah * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) 
+        return '((data_fix.jumlah * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) 
                  - 
-                 (SELECT SUM((data_fix.jumlah * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100)) 
+                 (SELECT SUM((data_fix.jumlah * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100)) 
                   FROM data_fix AS df 
                   LEFT JOIN index_layanan AS i ON df.kd_dpjp = i.nama 
                   LEFT JOIN kasus AS k ON df.id_kasus = k.id_kasus 
@@ -229,9 +229,9 @@ class M_rekap extends CI_Model
     }
     private function hitungSisaJasa2()
     {
-        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) 
+        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) 
                  - 
-                 (SELECT SUM((data_fix.jumlah_sebelum_dikurangi * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100)) 
+                 (SELECT SUM((data_fix.jumlah_sebelum_dikurangi * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100)) 
                   FROM data_fix AS df 
                   LEFT JOIN index_layanan AS i ON df.kd_dpjp = i.nama 
                   LEFT JOIN kasus AS k ON df.id_kasus = k.id_kasus 
