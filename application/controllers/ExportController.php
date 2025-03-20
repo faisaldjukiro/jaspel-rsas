@@ -44,7 +44,7 @@ class ExportController extends CI_Controller
                 $jasaDiterima = $data['jasa_operator2'];
             } elseif ($data['kd_dpjp'] == 'jasa anestesi') {
                 $jasaDiterima = $data['jasa_anestesi2'];
-            } elseif (in_array($data['kd_dpjp'], ['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN', 'MRI', 'KONSUL', 'GIZI'])) {
+            } elseif (in_array($data['kd_dpjp'], ['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN', 'MRI', 'KONSUL', 'GIZI', 'CT - SCAN RJ', 'MRI RJ', 'USG RJ'])) {
                 $jasaDiterima = $data['penunjang2'];
             }
 

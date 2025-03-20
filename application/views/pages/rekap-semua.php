@@ -133,8 +133,6 @@ a {
         </div>
     </div>
     <?php $this->load->view('include/js'); ?>
-
-
 </body>
 
 </html>

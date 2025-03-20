@@ -67,18 +67,22 @@ class UpdateallController extends CI_Controller
                             WHERE layanan = 'LABOLATORIUM'");
         $response[] = ['step' => 4, 'message' => 'Kode dpjp LAB Berhasil Diperbarui'];
 
-        $this->db->query("UPDATE data_sim
-                            SET kd_dpjp = CASE
-                                WHEN layanan = 'RADIOLOGI' AND tindakan LIKE '%foto%' THEN 'FOTO'
-                                WHEN layanan = 'RADIOLOGI' AND tindakan LIKE '%scan%' THEN 'CT - SCAN'
-                                WHEN layanan = 'RADIOLOGI' AND tindakan LIKE '%usg%' THEN 'USG'
-                                WHEN layanan = 'RADIOLOGI' AND tindakan LIKE '%mri%' THEN 'MRI'
-                                WHEN layanan = 'RADIOLOGI' AND tindakan LIKE '%kontras%' 
-                                    AND tindakan NOT LIKE '%mri%' 
-                                    AND tindakan NOT LIKE '%scan%' THEN 'RAD KONTRAS'
-                                ELSE kd_dpjp
+        $this->db->query("UPDATE data_sim ds
+                            JOIN klaim k ON ds.nosep = k.nosep
+                            SET ds.kd_dpjp = CASE
+                                WHEN ds.layanan = 'RADIOLOGI' AND ds.tindakan LIKE '%foto%' THEN 'FOTO'
+                                WHEN ds.layanan = 'RADIOLOGI' AND ds.tindakan LIKE '%scan%' THEN 
+                                    IF(k.no_fpk LIKE '%RJ%', 'CT - SCAN RJ', 'CT - SCAN')
+                                WHEN ds.layanan = 'RADIOLOGI' AND ds.tindakan LIKE '%usg%' THEN 
+                                    IF(k.no_fpk LIKE '%RJ%', 'USG RJ', 'USG')
+                                WHEN ds.layanan = 'RADIOLOGI' AND ds.tindakan LIKE '%mri%' THEN 
+                                    IF(k.no_fpk LIKE '%RJ%', 'MRI RJ', 'MRI')
+                                WHEN ds.layanan = 'RADIOLOGI' AND ds.tindakan LIKE '%kontras%' 
+                                    AND ds.tindakan NOT LIKE '%mri%' 
+                                    AND ds.tindakan NOT LIKE '%scan%' THEN 'RAD KONTRAS'
+                                ELSE ds.kd_dpjp
                             END
-                            WHERE layanan = 'RADIOLOGI'");
+                            WHERE ds.layanan = 'RADIOLOGI'");
         $response[] = ['step' => 5, 'message' => 'Kode dpjp RADIOLOGI Berhasil Diperbarui'];
 
         $this->db->query("UPDATE data_sim
@@ -170,7 +174,7 @@ class UpdateallController extends CI_Controller
                             WHERE kasus = 'bedah tanpa GA'
                             AND ruangan = 'biasa' 
                             AND komponen != 'DR.OPERATOR'
-                            AND kd_dpjp NOT IN ('LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT-SCAN', 'MRI', 'KONSUL');
+                            AND kd_dpjp NOT IN ('LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT-SCAN', 'MRI', 'KONSUL', 'GIZI', 'CT - SCAN RJ', 'MRI RJ', 'USG RJ');
                             ");
 
         $response[] = ['step' => 12, 'message' => 'Dpjp Utama Bedah Tanpa GA Berhasil Diperbarui'];

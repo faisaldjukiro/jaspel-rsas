@@ -94,7 +94,7 @@
                                                 $total_operator2 += $pasien['jasa_operator2'];
                                             } elseif ($pasien['kd_dpjp'] == 'jasa anestesi') {
                                                 $total_anestesi2 += $pasien['jasa_anestesi2'];
-                                            } elseif (in_array($pasien['kd_dpjp'], ['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN', 'MRI', 'KONSUL', 'GIZI'])) {
+                                            } elseif (in_array($pasien['kd_dpjp'], ['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN', 'MRI', 'KONSUL', 'GIZI', 'CT - SCAN RJ', 'MRI RJ', 'USG RJ'])) {
                                                
                                                 $total_penunjang2 += $pasien['penunjang2'];
                                             }
@@ -119,7 +119,7 @@
                                                         echo format_rupiah($pasien['jasa_operator2']);
                                                     } elseif ($pasien['kd_dpjp'] == 'jasa anestesi') {
                                                         echo format_rupiah($pasien['jasa_anestesi2']);
-                                                    } elseif (in_array($pasien['kd_dpjp'], ['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN', 'MRI', 'KONSUL', 'GIZI'])) {
+                                                    } elseif (in_array($pasien['kd_dpjp'], ['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN', 'MRI', 'KONSUL', 'GIZI', 'CT - SCAN RJ', 'MRI RJ', 'USG RJ'])) {
                                                         echo format_rupiah($pasien['penunjang2']);
                                                     } else {
                                                         echo 'Tidak ada jasa yang cocok';
