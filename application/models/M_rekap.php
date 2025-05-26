@@ -3,7 +3,7 @@ class M_rekap extends CI_Model
 {
     public function getRekap()
     {
-        $this->db->select('data_fix.nosep, data_fix.kasus, data_fix.rawat, data_fix.nama as nama_pasien, data_fix.dokter, data_fix.jumlah, data_fix.kd_dpjp');
+        $this->db->select('data_fix.nosep, data_fix.kasus, data_fix.rawat, data_fix.nama as nama_pasien, data_fix.dokter, data_fix.jumlah,data_fix.jumlah_sebelum_dikurangi, data_fix.kd_dpjp');
         $this->db->select('d.dpjp_utama as index_dpjp_utama, d.dpjp2_dst as index_dpjp2_dst');
         $this->db->select('k.dr_spesialis as porsi_dokter');
         $this->db->select($this->hitungPorsiDpjp() . ' AS porsi_dpjp');
@@ -48,22 +48,20 @@ class M_rekap extends CI_Model
     }
     public function getRekapByDokter($dokter)
     {
-        $this->db->select('data_fix.nosep, data_fix.kasus, data_fix.rawat, data_fix.nama as nama_pasien, data_fix.dokter, data_fix.jumlah, data_fix.kd_dpjp,data_fix.jumlah_sebelum_dikurangi');
+        $this->db->select('data_fix.nosep, data_fix.kasus, data_fix.rawat, data_fix.nama as nama_pasien, data_fix.dokter,  data_fix.kd_dpjp,data_fix.jumlah_sebelum_dikurangi');
         $this->db->select($this->hitungDokterSpesialis2() . ' AS dokter_spesialis_final');
-        $this->db->select($this->hitungPenunjang() . ' AS penunjang');
-        $this->db->select($this->hitungPenunjang2() . ' AS penunjang2');
-        $this->db->select($this->hitungSisaJasa() . ' AS sisa_jasa');
-        $this->db->select($this->hitungJasaOperator() . ' AS jasa_operator');
-        $this->db->select($this->hitungJasaOperator2() . ' AS jasa_operator2');
-        $this->db->select($this->hitungJasaAnestesi() . ' AS jasa_anestesi');
-        $this->db->select($this->hitungJasaAnestesi2() . ' AS jasa_anestesi2');
+        $this->db->select($this->hitungSisaJasa2() . ' AS sisa_jasa');
+        // $this->db->select($this->hitungTotalJasa20Persen() . ' AS total_10persen');
         $this->db->select($this->hitungPorsiDpjp() . ' AS porsi_dpjp');
         $this->db->select('d.dpjp_utama as index_dpjp_utama, d.dpjp2_dst as index_dpjp2_dst');
-        $this->db->select($this->hitungJasaDpjpUtama() . ' AS jasa_dpjp_utama');
+
         $this->db->select($this->hitungJasaDpjpUtama2() . ' AS jasa_dpjp_utama2');
-        $this->db->select($this->hitungJasaDpjp2Dst() . ' AS jasa_dpjp2_dst');
         $this->db->select($this->hitungJasaDpjp2Dst2() . ' AS jasa_dpjp2_dst2');
-        
+        $this->db->select($this->hitungPenunjang2() . ' AS penunjang2');
+        $this->db->select($this->hitungJasaOperator2() . ' AS jasa_operator2');
+        $this->db->select($this->hitungJasaAnestesi2() . ' AS jasa_anestesi2');
+
+
         $this->db->from('data_fix');
         $this->db->join('index_layanan AS i', 'data_fix.kd_dpjp = i.nama', 'left');
         $this->db->join('kasus AS k', 'data_fix.id_kasus = k.id_kasus', 'left');
@@ -95,14 +93,14 @@ class M_rekap extends CI_Model
                     SUM(CASE WHEN data_fix.kd_dpjp = "dpjp_utama" THEN ' . $this->hitungJasaDpjpUtama2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END)
                     ) * 0.9) AS jasa_80_persen', false);
-                       
+
         $this->db->select('
                         CASE 
                             WHEN data_fix.dokter != "Dokter Umum" THEN (' . $this->total20persen() . ') / (' . $this->jumlah_dokterspesialis() . ')
                             ELSE 0
                         END AS rata_jasa_20_persen', false);
         $this->db->select($this->jumlah_dokterspesialis() . ' AS jumlah_dokter');
-        
+
         $this->db->select('SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" OR data_fix.kd_dpjp = "MRI" OR data_fix.kd_dpjp = "KONSUL" OR data_fix.kd_dpjp = "GIZI" OR data_fix.kd_dpjp = "CT - SCAN RJ" OR data_fix.kd_dpjp = "MRI RJ" OR data_fix.kd_dpjp = "USG RJ" THEN ' . $this->hitungPenunjang2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "jasa operasi" THEN ' . $this->hitungJasaOperator2() . ' ELSE 0 END) +
                     SUM(CASE WHEN data_fix.kd_dpjp = "jasa anestesi" THEN ' . $this->hitungJasaAnestesi2() . ' ELSE 0 END) +
@@ -131,7 +129,7 @@ class M_rekap extends CI_Model
                                 ) * 0.9
                              )
                     END AS jasa_diterima', false);
-                
+
         $this->db->from('data_fix');
         $this->db->join('index_layanan AS i', 'data_fix.kd_dpjp = i.nama', 'left');
         $this->db->join('kasus AS k', 'data_fix.id_kasus = k.id_kasus', 'left');
@@ -163,14 +161,15 @@ class M_rekap extends CI_Model
         $this->db->order_by('jasa_diterima', 'DESC');
 
         return $this->db->get()->result_array();
-        }
-        
+    }
+
     private function total20persen()
     {
-            return 'SUM(' . $this->hitungTotalJasa20Persen() . ') OVER()';
-    }        
+        return 'SUM(' . $this->hitungTotalJasa20Persen() . ') OVER()';
+    }
 
-    private function hitungTotalJasa20Persen() {
+    private function hitungTotalJasa20Persen()
+    {
         return '(
             SUM(CASE WHEN data_fix.kd_dpjp = "LAB" OR data_fix.kd_dpjp = "LAB PA" OR data_fix.kd_dpjp = "FOTO" 
                      OR data_fix.kd_dpjp = "USG" OR data_fix.kd_dpjp = "RAD KONTRAS" OR data_fix.kd_dpjp = "CT - SCAN" 
@@ -182,7 +181,7 @@ class M_rekap extends CI_Model
             SUM(CASE WHEN data_fix.kd_dpjp = "dpjp2_dst" THEN ' . $this->hitungJasaDpjp2Dst2() . ' ELSE 0 END) 
         ) * 0.1';
     }
-        
+
     private function jumlah_dokterspesialis()
     {
         $query = $this->db->query("
@@ -190,18 +189,18 @@ class M_rekap extends CI_Model
             FROM data_fix
             WHERE dokter != 'Dokter Umum'
         ");
-        
+
         if ($query->num_rows() > 0) {
             return $query->row()->jumlah_dokter;
         } else {
-            return 0; 
+            return 0;
         }
     }
-    
-        
+
+
     private function hitungDokterSpesialis()
     {
-        return '((data_fix.jumlah * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100))';
+        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100))';
     }
     private function hitungDokterSpesialis2()
     {
@@ -210,7 +209,7 @@ class M_rekap extends CI_Model
 
     private function hitungPenunjang()
     {
-        return '((data_fix.jumlah * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100))';
+        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan_total/100 * k.pelayanan_total/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100))';
     }
     private function hitungPenunjang2()
     {
@@ -219,9 +218,9 @@ class M_rekap extends CI_Model
 
     private function hitungSisaJasa()
     {
-        return '((data_fix.jumlah * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) 
+        return '((data_fix.jumlah_sebelum_dikurangi * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) 
                  - 
-                 (SELECT SUM((data_fix.jumlah * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100)) 
+                 (SELECT SUM((data_fix.jumlah_sebelum_dikurangi * k.pelayanan_total/100 * k.pelayanan/100) * (k.spesialis_paramedis/100) * (k.dr_spesialis/100) * (COALESCE(i.presentase, 0)/100)) 
                   FROM data_fix AS df 
                   LEFT JOIN index_layanan AS i ON df.kd_dpjp = i.nama 
                   LEFT JOIN kasus AS k ON df.id_kasus = k.id_kasus 
@@ -335,7 +334,7 @@ class M_rekap extends CI_Model
 
     private function hitungJasaAnestesi()
     {
-        
+
         return '(CASE 
         WHEN data_fix.kasus = "bedah tanpa GA" 
              AND data_fix.rawat = "biasa" 
@@ -383,7 +382,7 @@ class M_rekap extends CI_Model
     }
     private function hitungJasaAnestesi2()
     {
-        
+
         return '(CASE 
         WHEN data_fix.kasus = "bedah tanpa GA" 
              AND data_fix.rawat = "biasa" 
@@ -484,7 +483,8 @@ class M_rekap extends CI_Model
 
     public function getRekapSemua()
     {
-        return $this->db->query("SELECT DISTINCT
+        return $this->db->query(
+            "SELECT DISTINCT
                                     a.nosep,
                                     a.kasus,
                                     a.rawat,
@@ -499,7 +499,6 @@ class M_rekap extends CI_Model
                                     FROM
                                     data_fix AS a
                                     LEFT JOIN kasus AS b ON a.id_kasus = b.id_kasus"
-                                )->result_array();
+        )->result_array();
     }
-
 }

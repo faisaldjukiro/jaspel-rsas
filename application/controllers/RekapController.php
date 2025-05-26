@@ -4,15 +4,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class RekapController extends CI_Controller
 {
 	public function __construct()
-    {
+	{
 		parent::__construct();
 		$role = $this->session->userdata('role');
-		if (empty($role)) { 
+		if (empty($role)) {
 			redirect('login');
-		} elseif ($role != 1 && $role != 2) { 
+		} elseif ($role != 1 && $role != 2) {
 			redirect('beranda');
 		}
-    }
+	}
 
 	public function getRekap()
 	{
@@ -108,7 +108,20 @@ class RekapController extends CI_Controller
 			return format_rupiah($row['jasa_operator']);
 		} elseif ($row['kd_dpjp'] == 'jasa anestesi') {
 			return format_rupiah($row['jasa_anestesi']);
-		} elseif (in_array($row['kd_dpjp'], ['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN', 'MRI', 'KONSUL'])) {
+		} elseif (in_array($row['kd_dpjp'], [
+			'LAB',
+			'LAB PA',
+			'FOTO',
+			'USG',
+			'RAD KONTRAS',
+			'CT - SCAN',
+			'MRI',
+			'KONSUL',
+			'GIZI',
+			'USG RJ',
+			'CT - SCAN RJ',
+			'MRI RJ'
+		])) {
 			return format_rupiah($row['penunjang']);
 		}
 		return 'Tidak ada jasa yang cocok';

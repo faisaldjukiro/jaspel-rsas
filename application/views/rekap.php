@@ -87,152 +87,152 @@
     </div>
     <?php $this->load->view('include/js'); ?>
     <script>
-    $(document).ready(function() {
-        var base_url = "<?php echo base_url('rincian-dokter-pasien/'); ?>";
+        $(document).ready(function() {
+            var base_url = "<?php echo base_url('rincian-dokter-pasien/'); ?>";
 
-        if ($.fn.DataTable.isDataTable('#tindakanpoliklinik')) {
-            $('#tindakanpoliklinik').DataTable().destroy();
-        }
-        let poliklinik_datatable = $("#tindakanpoliklinik").DataTable({
-            responsive: true,
-            "processing": true,
-            "serverSide": true,
-            "pageLength": 25,
-            "lengthMenu": [5, 10, 25, 50, 100, 200, 500, 1000],
-            "ajax": {
-                "url": "<?php echo base_url('RekapController/getRinciandokter'); ?>",
-                "type": "POST",
-                "data": function(d) {
-                    d.caridata = d.search.value;
-                }
-            },
-            "columns": [{
-                    "data": null,
-                    "render": function(data, type, row, meta) {
-                        return meta.row + 1;
-                    }
-                },
-                {
-                    "data": "nosep",
-                    "render": function(data, type, row) {
-                        return '<a href="' + base_url + data + '" class="badge bg-secondary">' +
-                            data + '</a>';
-                    }
-                },
-                {
-                    "data": "kasus"
-                },
-
-                {
-                    "data": "rawat"
-                },
-                {
-                    "data": "nama_pasien"
-                },
-                {
-                    "data": "dokter"
-                },
-                {
-                    "data": "jumlah",
-                    "render": function(data, type, row) {
-                        return 'Rp ' + parseInt(data).toLocaleString('id-ID');
-                    }
-                },
-                {
-                    "data": "kd_dpjp"
-                },
-                {
-                    "data": "dokter_spesialis_final",
-                    "render": function(data, type, row) {
-                        return 'Rp ' + parseInt(data).toLocaleString('id-ID');
-                    }
-                },
-                {
-                    "data": null,
-                    "render": function(data, type, row) {
-                        let jasa_dpjp = 0;
-
-                        if (row.kd_dpjp === 'dpjp_utama') {
-                            jasa_dpjp = row.jasa_dpjp_utama;
-                        } else if (row.kd_dpjp === 'dpjp2_dst') {
-                            jasa_dpjp = row.jasa_dpjp2_dst;
-                        } else if (row.kd_dpjp === 'jasa operasi') {
-                            jasa_dpjp = row.jasa_operator;
-                        } else if (row.kd_dpjp === 'jasa anestesi') {
-                            jasa_dpjp = row.jasa_anestesi;
-                        } else if (['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN',
-                                'MRI', 'KONSUL'
-                            ].includes(row.kd_dpjp)) {
-                            jasa_dpjp = row.penunjang;
-                        } else {
-                            jasa_dpjp = 0;
-                        }
-
-                        return 'Rp ' + parseInt(jasa_dpjp).toLocaleString('id-ID');
-                    }
-                }
-
-            ]
-
-        });
-    });
-    </script>
-
-    <script>
-    $(document).ready(function() {
-        var table = $('#tindakanpoliklinik').DataTable();
-        $('#exportBtn').on('click', function() {
-            var csvContent =
-                "No,Sep,Kasus,Rawat,Nama Pasien,Dokter,Klaim,Kode,Dokter Spesialis,Penunjang,Sisa Jasa,Jasa Operator,Jasa Anestesi,Jasa Dpjp Utama,Jasa Dpjp2 Dst,Jumlah Jasa\n";
-            table.rows({
-                page: 'current'
-            }).every(function() {
-                var row = this.data();
-                var rowData = [
-                    row[0],
-                    row[1],
-                    row[2],
-                    row[3],
-                    row[4],
-                    row[5],
-                    row[6],
-                    row[7],
-                    row[8],
-                    row[9],
-                    row[10],
-                    row[11],
-                    row[12],
-                    row[13],
-                    row[14],
-                    row[15]
-                ];
-
-                csvContent += rowData.join(",") + "\n";
-            });
-            var encodedUri = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "rekap_data.csv");
-            link.click();
-        });
-    });
-    </script>
-    <script>
-    $(document).ready(function() {
-        var table = $('#tindakanpoliklinik').DataTable();
-
-        var totalJumlahJasa = 0;
-        table.rows().every(function() {
-            var row = this.data();
-            var jumlahJasa = row[15];
-
-            jumlahJasa = parseFloat(jumlahJasa.replace('Rp', '').replace(',', '').trim());
-            if (!isNaN(jumlahJasa)) {
-                totalJumlahJasa += jumlahJasa;
+            if ($.fn.DataTable.isDataTable('#tindakanpoliklinik')) {
+                $('#tindakanpoliklinik').DataTable().destroy();
             }
+            let poliklinik_datatable = $("#tindakanpoliklinik").DataTable({
+                responsive: true,
+                "processing": true,
+                "serverSide": true,
+                "pageLength": 25,
+                "lengthMenu": [5, 10, 25, 50, 100, 200, 500, 1000],
+                "ajax": {
+                    "url": "<?php echo base_url('RekapController/getRinciandokter'); ?>",
+                    "type": "POST",
+                    "data": function(d) {
+                        d.caridata = d.search.value;
+                    }
+                },
+                "columns": [{
+                        "data": null,
+                        "render": function(data, type, row, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": "nosep",
+                        "render": function(data, type, row) {
+                            return '<a href="' + base_url + data + '" class="badge bg-secondary">' +
+                                data + '</a>';
+                        }
+                    },
+                    {
+                        "data": "kasus"
+                    },
+
+                    {
+                        "data": "rawat"
+                    },
+                    {
+                        "data": "nama_pasien"
+                    },
+                    {
+                        "data": "dokter"
+                    },
+                    {
+                        "data": "jumlah",
+                        "render": function(data, type, row) {
+                            return 'Rp ' + parseInt(data).toLocaleString('id-ID');
+                        }
+                    },
+                    {
+                        "data": "kd_dpjp"
+                    },
+                    {
+                        "data": "dokter_spesialis_final",
+                        "render": function(data, type, row) {
+                            return 'Rp ' + parseInt(data).toLocaleString('id-ID');
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function(data, type, row) {
+                            let jasa_dpjp = 0;
+
+                            if (row.kd_dpjp === 'dpjp_utama') {
+                                jasa_dpjp = row.jasa_dpjp_utama;
+                            } else if (row.kd_dpjp === 'dpjp2_dst') {
+                                jasa_dpjp = row.jasa_dpjp2_dst;
+                            } else if (row.kd_dpjp === 'jasa operasi') {
+                                jasa_dpjp = row.jasa_operator;
+                            } else if (row.kd_dpjp === 'jasa anestesi') {
+                                jasa_dpjp = row.jasa_anestesi;
+                            } else if (['LAB', 'LAB PA', 'FOTO', 'USG', 'RAD KONTRAS', 'CT - SCAN',
+                                    'MRI', 'KONSUL', 'GIZI', 'USG RJ', 'CT - SCAN RJ', 'MRI RJ'
+                                ].includes(row.kd_dpjp)) {
+                                jasa_dpjp = row.penunjang;
+                            } else {
+                                jasa_dpjp = 0;
+                            }
+
+                            return 'Rp ' + parseInt(jasa_dpjp).toLocaleString('id-ID');
+                        }
+                    }
+
+                ]
+
+            });
         });
-        $('#totalJumlahJasa').text('Rp ' + totalJumlahJasa.toLocaleString());
-    });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            var table = $('#tindakanpoliklinik').DataTable();
+            $('#exportBtn').on('click', function() {
+                var csvContent =
+                    "No,Sep,Kasus,Rawat,Nama Pasien,Dokter,Klaim,Kode,Dokter Spesialis,Penunjang,Sisa Jasa,Jasa Operator,Jasa Anestesi,Jasa Dpjp Utama,Jasa Dpjp2 Dst,Jumlah Jasa\n";
+                table.rows({
+                    page: 'current'
+                }).every(function() {
+                    var row = this.data();
+                    var rowData = [
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        row[5],
+                        row[6],
+                        row[7],
+                        row[8],
+                        row[9],
+                        row[10],
+                        row[11],
+                        row[12],
+                        row[13],
+                        row[14],
+                        row[15]
+                    ];
+
+                    csvContent += rowData.join(",") + "\n";
+                });
+                var encodedUri = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "rekap_data.csv");
+                link.click();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var table = $('#tindakanpoliklinik').DataTable();
+
+            var totalJumlahJasa = 0;
+            table.rows().every(function() {
+                var row = this.data();
+                var jumlahJasa = row[15];
+
+                jumlahJasa = parseFloat(jumlahJasa.replace('Rp', '').replace(',', '').trim());
+                if (!isNaN(jumlahJasa)) {
+                    totalJumlahJasa += jumlahJasa;
+                }
+            });
+            $('#totalJumlahJasa').text('Rp ' + totalJumlahJasa.toLocaleString());
+        });
     </script>
 
 

@@ -4,10 +4,10 @@
 <head>
     <?php $this->load->view('include/head'); ?>
     <style>
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
 </head>
 
@@ -50,22 +50,22 @@
                         </div>
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h6 class="card-title mb-0">Rincian
-                                <?php 
-                                    $dokter = $dokter_pasien[0]['dokter'];
-                                    $dokter = urldecode($dokter);
-                                    $dokter = preg_replace('/[^a-zA-Z\s.]/', '', $dokter);
-                                    echo $dokter;
+                                <?php
+                                $dokter = $dokter_pasien[0]['dokter'];
+                                $dokter = urldecode($dokter);
+                                $dokter = preg_replace('/[^a-zA-Z\s.]/', '', $dokter);
+                                echo $dokter;
                                 ?>
                             </h6>
 
 
                             <div class="d-flex gap-2">
                                 <?php if (!empty($dokter_pasien)): ?>
-                                <a href="<?= base_url('export-data/' . rawurlencode($dokter_pasien[0]['dokter'])) ?>">
-                                    <button class="btn btn-success">
-                                        <i class="bi bi-bar-chart-fill"></i> Excel
-                                    </button>
-                                </a>
+                                    <a href="<?= base_url('export-data/' . rawurlencode($dokter_pasien[0]['dokter'])) ?>">
+                                        <button class="btn btn-success">
+                                            <i class="bi bi-bar-chart-fill"></i> Excel
+                                        </button>
+                                    </a>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -108,21 +108,21 @@
                                                 $total_penunjang2 += $pasien['penunjang2'];
                                             }
                                         ?>
-                                        <tr>
-                                            <td><?= $no++; ?></td>
-                                            <td> <a href="<?= base_url('rincian-dokter-pasien/' . $pasien['nosep']) ?>">
-                                                    <?= htmlspecialchars($pasien['nosep']) ?>
-                                                </a></td>
-                                            <td><?= $pasien['kasus'] ?></td>
-                                            <td><?= $pasien['rawat'] ?></td>
-                                            <td><?= $pasien['nama_pasien'] ?></td>
-                                            <td><?= $pasien['dokter'] ?></td>
-                                            <td><?= format_rupiah($pasien['jumlah_sebelum_dikurangi']) ?></td>
-                                            <td><?= $pasien['kd_dpjp'] ?></td>
-                                            <td><?= format_rupiah($pasien['dokter_spesialis_final']) ?></td>
+                                            <tr>
+                                                <td><?= $no++; ?></td>
+                                                <td> <a href="<?= base_url('rincian-dokter-pasien/' . $pasien['nosep']) ?>">
+                                                        <?= htmlspecialchars($pasien['nosep']) ?>
+                                                    </a></td>
+                                                <td><?= $pasien['kasus'] ?></td>
+                                                <td><?= $pasien['rawat'] ?></td>
+                                                <td><?= $pasien['nama_pasien'] ?></td>
+                                                <td><?= $pasien['dokter'] ?></td>
+                                                <td><?= format_rupiah($pasien['jumlah_sebelum_dikurangi']) ?></td>
+                                                <td><?= $pasien['kd_dpjp'] ?></td>
+                                                <td><?= format_rupiah($pasien['dokter_spesialis_final']) ?></td>
 
-                                            <td>
-                                                <?php
+                                                <td>
+                                                    <?php
                                                     if ($pasien['kd_dpjp'] == 'dpjp_utama') {
                                                         echo format_rupiah($pasien['jasa_dpjp_utama2']);
                                                     } elseif ($pasien['kd_dpjp'] == 'dpjp2_dst') {
@@ -137,8 +137,8 @@
                                                         echo 'Tidak ada jasa yang cocok';
                                                     }
                                                     ?>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
                                         <?php endforeach ?>
                                     </tbody>
                                     <tfoot>
@@ -163,43 +163,43 @@
 
 
     <script>
-    $(document).ready(function() {
-        var table = $('#tindakanpoliklinik').DataTable();
-        $('#exportBtn').on('click', function() {
-            var csvContent =
-                "No,Sep,Kasus,Rawat,Nama Pasien,Dokter,Klaim,Kode,Dokter Spesialis,Jumlah Jasa\n";
-            table.rows({
-                page: 'current'
-            }).every(function() {
-                var row = this.data();
-                var rowData = [
-                    row[0],
-                    row[1],
-                    row[2],
-                    row[3],
-                    row[4],
-                    row[5],
-                    row[6],
-                    row[7],
-                    row[8]
-                    // row[9],
-                    // row[10],
-                    // row[11],
-                    // row[12],
-                    // row[13],
-                    // row[14],
-                    // row[15]
-                ];
+        $(document).ready(function() {
+            var table = $('#tindakanpoliklinik').DataTable();
+            $('#exportBtn').on('click', function() {
+                var csvContent =
+                    "No,Sep,Kasus,Rawat,Nama Pasien,Dokter,Klaim,Kode,Dokter Spesialis,Jumlah Jasa\n";
+                table.rows({
+                    page: 'current'
+                }).every(function() {
+                    var row = this.data();
+                    var rowData = [
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        row[5],
+                        row[6],
+                        row[7],
+                        row[8]
+                        // row[9],
+                        // row[10],
+                        // row[11],
+                        // row[12],
+                        // row[13],
+                        // row[14],
+                        // row[15]
+                    ];
 
-                csvContent += rowData.join(",") + "\n";
+                    csvContent += rowData.join(",") + "\n";
+                });
+                var encodedUri = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
+                var link = document.createElement("a");
+                link.setAttribute("href", encodedUri);
+                link.setAttribute("download", "rekap_data.csv");
+                link.click();
             });
-            var encodedUri = encodeURI('data:text/csv;charset=utf-8,' + csvContent);
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "rekap_data.csv");
-            link.click();
         });
-    });
     </script>
 
 

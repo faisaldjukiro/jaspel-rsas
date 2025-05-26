@@ -18,7 +18,6 @@ class BerandaController extends CI_Controller
         $data['title'] = "Beranda";
         $this->load->view('frontend/beranda',$data);
     }
-              
     public function getChartDokter()
     {
         $kd_peg = $this->session->userdata('username');
@@ -122,7 +121,4 @@ class BerandaController extends CI_Controller
         }
     }
 
-
-    
-    
 }

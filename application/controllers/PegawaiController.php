@@ -4,16 +4,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class PegawaiController extends CI_Controller
 {
 	public function __construct()
-    {
-        // if ($role != 10 && $role != 5) {
-			parent::__construct();
-			$role = $this->session->userdata('role');
-			if (empty($role)) { 
-				redirect('login');
-			} elseif ($role != 1 && $role != 3) { 
-				redirect('beranda');
-			}
-    }
+	{
+		// if ($role != 10 && $role != 5) {
+		parent::__construct();
+		$role = $this->session->userdata('role');
+		if (empty($role)) {
+			redirect('login');
+		} elseif ($role != 1 && $role != 3) {
+			redirect('beranda');
+		}
+	}
 	public function getPegawai()
 	{
 		$data['title'] = "Data Pegawai";
@@ -38,7 +38,7 @@ class PegawaiController extends CI_Controller
 	public function getRekapParamedisFilter($grup = 'all', $ruangan = 'all')
 	{
 		$data['title'] = "Jasa Pegawai";
-	
+
 		$grup = urldecode(urldecode($grup));
 		$ruangan = urldecode(urldecode($ruangan));
 		$grup = str_replace('+', ' ', $grup);
@@ -54,30 +54,31 @@ class PegawaiController extends CI_Controller
 		$query = $this->db->get();
 		$data['rekapJasaParamedisFillter'] = $query->result_array();
 		$data['total_sisa_jasa'] = array_sum(array_column($data['rekapJasaParamedisFillter'], 'sisa_jasa_pegawai'));
-	
+
 		$data['grup'] = $this->db->query("SELECT DISTINCT grup FROM simulasi_jasa_finish ORDER BY grup ASC")->result_array();
 		$data['ruangan'] = $this->db->query("SELECT DISTINCT ruangan FROM simulasi_jasa_finish ORDER BY ruangan ASC")->result_array();
-	
+
 		$this->load->view('pages/paramedis/rekap_all', $data);
 	}
-	
 
-	public function simpanporsi() {
+
+	public function simpanporsi()
+	{
 		$id = $this->input->post('id');
 		$total_jasa = $this->input->post('total_jasa');
-		$kebersamaan = $this->input->post('kebersamaan'); 
-		$angka_kebersamaan = $this->input->post('angka_kebersamaan'); 
-	
+		$kebersamaan = $this->input->post('kebersamaan');
+		$angka_kebersamaan = $this->input->post('angka_kebersamaan');
+
 		if ($id && $total_jasa !== '' && $kebersamaan !== '' && $angka_kebersamaan !== '') {
 			$data = array(
 				'total_jasa' => $total_jasa,
 				'kebersamaan' => $kebersamaan,
 				'angka_kebersamaan' => $angka_kebersamaan
 			);
-	
+
 			$this->db->where('id_porsi', $id);
 			$update = $this->db->update('porsi_jasa_pegawai', $data);
-	
+
 			if ($update) {
 				echo json_encode(array('status' => 'success', 'message' => 'Data berhasil diperbarui!'));
 			} else {
@@ -87,12 +88,12 @@ class PegawaiController extends CI_Controller
 			echo json_encode(array('status' => 'error', 'message' => 'Data tidak lengkap.'));
 		}
 	}
-	
-	
+
+
 	public function tarikDatapegawai()
 	{
 		$this->db->query("DELETE FROM data_pegawai");
-        $url = "https://ws.rsaloeisaboe-gorontalokota.com/pegawai/api.php";
+		$url = "https://ws.rsaloeisaboe-gorontalokota.com/pegawai/api.php";
 		$json = file_get_contents($url);
 		$response = json_decode($json, true);
 
@@ -121,26 +122,97 @@ class PegawaiController extends CI_Controller
 			if (!empty($pegawai_data)) {
 				$this->db->empty_table('data_pegawai');
 				$this->db->insert_batch('data_pegawai', $pegawai_data);
+				// $update_mappings = [
+				// 	'Manajemen-Casemix' => [
+				// 		'USMAN BARUADI',
+				// 		'MAIMUN LAHABU',
+				// 		'APRIS DALI',
+				// 		'DWI MAGISTA CAHYANINGSIH USMAN. S.Kom',
+				// 		'SRI FAJRI MAHANI, A.Md',
+				// 		'DWI FEBRIYANTI L. M. BASIMAN, A.Md.RMIK',
+				// 		'NOVIYANTI AHMAD',
+				// 		'DIDIT SETIADI GANI',
+				// 		'MAYA MAHMUD',
+				// 		'SEVTIANSI R. ADIKO',
+				// 		'AMINA HULALATA',
+				// 		'RAHMAWATY POLAMOLO, SKM.,M.Kes',
+				// 		'KASMIANTI,A.Md.PK'
+				// 	],
+				// 	'Manajemen-Kabid' => [
+				// 		'ABDUL RAFID J. A. PAKAI, SE.,MM',
+				// 		'MOHAMAD TAUFIK DUNGGA, S.IP.,M.Si',
+				// 		'TITIEK S. WANTOGIA, SH',
+				// 		'DIAN AFFIANTI NADJAMUDIN, S.Kep.Ns',
+				// 		'FONNY LAMBA, S.Kep.Ns',
+				// 		'EVARIYANTI KATILI, S.KM'
+				// 	],
+				// 	'Manajemen-SPI' => [
+				// 		'RIO FRANSISCO H. PADU, SH',
+				// 		'NOVITA LAMATO, A.Md'
+				// 	],
+				// 	'Manajemen-TK' => [
+				// 		'dr. JEFRI MUSTAPA, MP.H',
+				// 		'MURYATI ROKANI, S.Kep.Ns.,M.Kep',
+				// 		'ERAWATY H. KARIM, S.Pd.,M.AP',
+				// 		'MOHAMAD RIFAI HIOLA, S.Kom',
+				// 		'RULAN POBI, SH',
+				// 		'YULFAN ANGGOWA, S.KM',
+				// 		'MEMY S. BEMPAH, SKM',
+				// 		'YANTO YOESOEF PONTOH, SE',
+				// 		'IRAMAYA ERAKU, SE',
+				// 		'NURHAYATI F. NASIBU, SE',
+				// 		'RAHMAWATY MONOARFA, SE',
+				// 		'ARIFSANDI SUPARNO TOME, S.KM',
+				// 		'RAHMAN LUAWO, S.ST',
+				// 		'DJAYADI AZIS, S.Si.Apt'
+				// 	],
+				// 	'Manajemen-direktur' => [
+				// 		'Dr. MOHAMMAD KASIM M.Sc.Apt'
+				// 	],
+				// 	'Manajemen-wadir-2' => [
+				// 		'H. HANSMI JAHJA SE.M.Ec.Dev'
+				// 	],
+				// 	'Manajemen-wadir-1' => [
+				// 		'dr. BOBY HARUN OKO M.Kes'
+				// 	]
+				// ];
 				$update_mappings = [
-					'Manajemen-Casemix' => [
-						'USMAN BARUADI', 'MAIMUN LAHABU', 'APRIS DALI', 'DWI MAGISTA CAHYANINGSIH USMAN. S.Kom',
-						'SRI FAJRI MAHANI, A.Md', 'DWI FEBRIYANTI L. M. BASIMAN, A.Md.RMIK', 'NOVIYANTI AHMAD',
-						'DIDIT SETIADI GANI', 'MAYA MAHMUD', 'SEVTIANSI R. ADIKO', 'AMINA HULALATA',
-						'RAHMAWATY POLAMOLO, SKM.,M.Kes', 'KASMIANTI,A.Md.PK'
-					],
-					'Manajemen-Kabid' => [
-						'ABDUL RAFID J. A. PAKAI, SE.,MM', 'MOHAMAD TAUFIK DUNGGA, S.IP.,M.Si',
-						'TITIEK S. WANTOGIA, SH', 'DIAN AFFIANTI NADJAMUDIN, S.Kep.Ns',
-						'FONNY LAMBA, S.Kep.Ns', 'EVARIYANTI KATILI, S.KM'
-					],
-					'Manajemen-SPI' => [
-						'RIO FRANSISCO H. PADU, SH', 'NOVITA LAMATO, A.Md'
-					],
-					'Manajemen-TK' => [
-						'dr. JEFRI MUSTAPA, MP.H', 'MURYATI ROKANI, S.Kep.Ns.,M.Kep', 'ERAWATY H. KARIM, S.Pd.,M.AP',
-						'MOHAMAD RIFAI HIOLA, S.Kom', 'RULAN POBI, SH', 'YULFAN ANGGOWA, S.KM', 'MEMY S. BEMPAH, SKM',
-						'YANTO YOESOEF PONTOH, SE', 'IRAMAYA ERAKU, SE', 'NURHAYATI F. NASIBU, SE',
-						'RAHMAWATY MONOARFA, SE', 'ARIFSANDI SUPARNO TOME, S.KM', 'RAHMAN LUAWO, S.ST','DJAYADI AZIS, S.Si.Apt'
+					'Manajemen-Tim' => [
+						'USMAN BARUADI',
+						'MAIMUN LAHABU',
+						'APRIS DALI',
+						'DWI MAGISTA CAHYANINGSIH USMAN. S.Kom',
+						'SRI FAJRI MAHANI, A.Md',
+						'DWI FEBRIYANTI L. M. BASIMAN, A.Md.RMIK',
+						'NOVIYANTI AHMAD',
+						'DIDIT SETIADI GANI',
+						'MAYA MAHMUD',
+						'SEVTIANSI R. ADIKO',
+						'AMINA HULALATA',
+						'RAHMAWATY POLAMOLO, SKM.,M.Kes',
+						'KASMIANTI,A.Md.PK',
+						'ABDUL RAFID J. A. PAKAI, SE.,MM',
+						'MOHAMAD TAUFIK DUNGGA, S.IP.,M.Si',
+						'TITIEK S. WANTOGIA, SH',
+						'DIAN AFFIANTI NADJAMUDIN, S.Kep.Ns',
+						'FONNY LAMBA, S.Kep.Ns',
+						'EVARIYANTI KATILI, S.KM',
+						'RIO FRANSISCO H. PADU, SH',
+						'NOVITA LAMATO, A.Md',
+						'dr. JEFRI MUSTAPA, MP.H',
+						'MURYATI ROKANI, S.Kep.Ns.,M.Kep',
+						'ERAWATY H. KARIM, S.Pd.,M.AP',
+						'MOHAMAD RIFAI HIOLA, S.Kom',
+						'RULAN POBI, SH',
+						'YULFAN ANGGOWA, S.KM',
+						'MEMY S. BEMPAH, SKM',
+						'YANTO YOESOEF PONTOH, SE',
+						'IRAMAYA ERAKU, SE',
+						'NURHAYATI F. NASIBU, SE',
+						'RAHMAWATY MONOARFA, SE',
+						'ARIFSANDI SUPARNO TOME, S.KM',
+						'RAHMAN LUAWO, S.ST',
+						'DJAYADI AZIS, S.Si.Apt'
 					],
 					'Manajemen-direktur' => [
 						'Dr. MOHAMMAD KASIM M.Sc.Apt'
@@ -158,14 +230,12 @@ class PegawaiController extends CI_Controller
 				}
 				echo "Data berhasil diperbarui dan kelompok_pegawai telah diperbarui!";
 				return redirect('data-pegawai');
-				
 			} else {
 				echo "Tidak ada data untuk dimasukkan.";
 			}
 		} else {
 			echo "Gagal mengambil data dari API.";
 		}
-
 	}
 	public function updatePegawai()
 	{
@@ -185,6 +255,4 @@ class PegawaiController extends CI_Controller
 			echo json_encode(["status" => "error"]);
 		}
 	}
-
-
 }
